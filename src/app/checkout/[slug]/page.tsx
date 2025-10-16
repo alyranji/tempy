@@ -1,4 +1,6 @@
-import { type ReactNode } from "react";
+"use client";
+
+import { type ReactNode, use, useEffect, useState } from "react";
 
 import { TickSquare } from "iconsax-reactjs";
 import Image from "next/image";
@@ -6,10 +8,9 @@ import { notFound } from "next/navigation";
 
 import { CheckoutForm } from "@/components/checkout form/checkout-form";
 
-// import { Badge } from "@/components/ui/badge";
-import { useCart } from "@/providers/CartProvider";
+import { Template } from "@/types/templates";
 
-import { templates } from "@/types/templates";
+import { filterTemplates } from "@/utils/filter-templates";
 
 import styles from "./CheckoutPage.module.css";
 
@@ -19,20 +20,24 @@ interface CheckoutPageProps {
   };
 }
 
-export function generateStaticParams(): { slug: string }[] {
-  return templates.map((template) => ({
-    slug: template.slug,
-  }));
-}
+// export function generateStaticParams(): { slug: string }[] {
+//   return templates.map((template) => ({
+//     slug: template.slug,
+//   }));
+// }
 
 export default function CheckoutPage({ params }: CheckoutPageProps): ReactNode {
-  const template = templates.find((t) => t.slug === params.slug);
-  console.log(params.slug);
-
-  if (!template) {
-    notFound();
-  }
-
+  const [templates, setTemplates] = useState<Template[]>();
+  const { slug } = use(params);
+  useEffect(() => {
+    async function fetchTemplates(): Promise<void> {
+      const data = await filterTemplates();
+      setTemplates(data);
+    }
+    fetchTemplates();
+  }, []);
+  if (!templates) return;
+  const template = templates.find((template) => template.slug === slug);
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -41,7 +46,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps): ReactNode {
 
           <div className={styles.grid}>
             <div className={styles.left}>
-              <CheckoutForm template={template} />
+              <CheckoutForm template={template!} />
             </div>
 
             <div className={styles.right}>
@@ -52,16 +57,16 @@ export default function CheckoutPage({ params }: CheckoutPageProps): ReactNode {
 
                   <div className={styles.templateInfo}>
                     <div className={styles.templateText}>
-                      <h3>{template.title}</h3>
-                      <p>{template.description}</p>
+                      <h3>{template?.title}</h3>
+                      <p>{template?.description}</p>
                       {/* {template.sellCount > 20 && (
                         <Badge className={styles.badge}>محبوب</Badge>
                       )} */}
                     </div>
                     <div className={styles.templateImage}>
                       <Image
-                        src={template.image || "/placeholder.svg"}
-                        alt={template.title}
+                        src={template?.image || "/placeholder.svg"}
+                        alt={template!.title}
                         fill
                         className={styles.image}
                       />
@@ -71,7 +76,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps): ReactNode {
                   <div className={styles.priceDetails}>
                     <div>
                       <span>
-                        {template.price.toLocaleString("fa-IR")} تومان
+                        {template?.price.toLocaleString("fa-IR")} تومان
                       </span>
                       <span>قیمت قالب</span>
                     </div>
@@ -87,7 +92,7 @@ export default function CheckoutPage({ params }: CheckoutPageProps): ReactNode {
 
                   <div className={styles.total}>
                     <span className={styles.totalPrice}>
-                      {template.price.toLocaleString("fa-IR")} تومان
+                      {template?.price.toLocaleString("fa-IR")} تومان
                     </span>
                     <span>مجموع</span>
                   </div>

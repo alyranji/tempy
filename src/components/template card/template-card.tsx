@@ -18,7 +18,6 @@ type TemplateCardProps = {
 
 function TemplateCard({ template }: TemplateCardProps): ReactNode {
   const { addItem } = useCart();
-  console.log("TemplateCard:", template);
   return (
     <div className={styles.card}>
       <div className={styles.imageWrapper}>

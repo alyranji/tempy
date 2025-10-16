@@ -10,7 +10,8 @@ export async function GET(req: Request): Promise<NextResponse> {
 
     const status = "active";
 
-    const isRtl = searchParams.get("isrtl");
+    const isRtl = searchParams.get("isRtl");
+    console.log("in route: ", isRtl);
     const priceMin = searchParams.get("price_min");
     const priceMax = searchParams.get("price_max");
     const sort = searchParams.get("sort");
@@ -51,7 +52,7 @@ export async function GET(req: Request): Promise<NextResponse> {
     const values: (string | number)[] = [status];
 
     if (isRtl) {
-      query += " AND t.isRtl = ?";
+      query += " AND t.isRTL = ?";
       values.push(isRtl === "true" ? 1 : 0);
     }
 
@@ -136,7 +137,6 @@ export async function GET(req: Request): Promise<NextResponse> {
         : [],
     }));
 
-    console.log("templates:", templates);
     await connection.end();
 
     return NextResponse.json({

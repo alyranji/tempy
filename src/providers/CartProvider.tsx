@@ -24,10 +24,6 @@ export default function CartProvider({
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
-    console.log("items updated:", items);
-  }, [items]);
-
-  useEffect(() => {
     const storedCart = localStorage.getItem("cart");
     if (storedCart) {
       setItems(JSON.parse(storedCart));

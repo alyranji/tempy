@@ -1,11 +1,9 @@
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(5, 1fr);
     grid-column-gap: 16px;
     grid-row-gap: 16px;
-    padding-inline: calc(max(100% - 1400px, 32px) / 2);
-    padding-block: 6rem;
 
 
 

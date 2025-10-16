@@ -1,34 +1,17 @@
-"use client";
-
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode } from "react";
 
 import { Template } from "@/types/templates";
-
-import { filterTemplates } from "@/utils/filter-templates";
 
 import TemplateCard from "../template card/template-card";
 
 import styles from "./CardGrid.module.css";
 
-const CardGrid = (): ReactNode => {
-  const [templates, setTemplates] = useState<Template[]>();
-  const [loading, setLoading] = useState(true);
+type CardGridType = {
+  loading?: boolean;
+  templates: Template[] | undefined;
+};
 
-  useEffect(() => {
-    async function fetchTemplates(): Promise<void> {
-      try {
-        const data = await filterTemplates({});
-        setTemplates(data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchTemplates();
-  }, []);
-
+const CardGrid = ({ loading, templates }: CardGridType): ReactNode => {
   if (loading) return <p>Loading...</p>;
   return (
     <section className={styles.grid}>
