@@ -44,4 +44,20 @@
         }
     }
 
+    .left {
+        .sorting {
+            .sortingItem {
+                margin-inline-end: 5px;
+
+                &.active {
+                    color: var(--cc-royal-blue);
+                    background-color: var(--cc-baby-blue);
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                }
+            }
+
+        }
+    }
+
 }
