@@ -11,7 +11,6 @@ export async function GET(req: Request): Promise<NextResponse> {
     const status = "active";
 
     const isRtl = searchParams.get("isRtl");
-    console.log("in route: ", isRtl);
     const priceMin = searchParams.get("price_min");
     const priceMax = searchParams.get("price_max");
     const sort = searchParams.get("sort");

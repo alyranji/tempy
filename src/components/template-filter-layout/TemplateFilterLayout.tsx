@@ -6,6 +6,7 @@ import React, { ReactNode } from "react";
 import clsx from "clsx";
 
 import { Category, Trash } from "iconsax-reactjs";
+import { Sort } from "iconsax-reactjs";
 
 import { Template } from "@/types/templates";
 
@@ -67,6 +68,8 @@ function TemplateFilterLayout(): ReactNode {
       </div>
       <div className={styles.left}>
         <div className={styles.sorting}>
+          <Sort />
+          <p>مرتب سازی:</p>
           <span
             onClick={() => setSort("newest")}
             className={clsx(
@@ -83,7 +86,7 @@ function TemplateFilterLayout(): ReactNode {
               sort === "price_asc" && styles.active,
             )}
           >
-            گرانترین
+            ارزانترین
           </span>
 
           <span
@@ -103,7 +106,7 @@ function TemplateFilterLayout(): ReactNode {
               sort === "price_desc" && styles.active,
             )}
           >
-            ارزانترین
+            گرانترین
           </span>
         </div>
         <CardGrid templates={templates} />

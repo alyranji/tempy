@@ -2,7 +2,6 @@
     padding-block: 5rem;
     display: grid;
     grid-template-columns: 2fr 6fr;
-    flex-direction: row;
     gap: 24px;
     padding-inline: calc(max(100% - 1400px, 32px) / 2);
 
@@ -31,33 +30,103 @@
     .left {
         display: flex;
         flex-direction: column;
-        gap: 24px;
 
         .sorting {
             display: flex;
             gap: 24px;
             align-items: center;
             height: 5rem;
-            background-image: var(--gradient-lavender);
-            padding-inline: 2rem;
+            background-color: var(--cc-pure-white);
             border-radius: 16px;
-        }
-    }
+            padding-inline: 1.5rem;
+            flex-wrap: wrap;
+            /* ✅ برای وقتی جا کم می‌شه */
 
-    .left {
-        .sorting {
             .sortingItem {
-                margin-inline-end: 5px;
+                cursor: pointer;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                color: var(--cc-slate-gray);
+                transition: color 0.2s ease;
 
                 &.active {
-                    color: var(--cc-royal-blue);
-                    background-color: var(--cc-baby-blue);
-                    padding: 8px 16px;
-                    border-radius: 8px;
+                    color: var(--cc-azure-blue);
+                    font-weight: 500;
                 }
             }
-
         }
     }
+}
 
+/* ✅ --- ریسپانسیو‌ها --- */
+
+/* لپ‌تاپ متوسط */
+@media (max-width: 1200px) {
+    .layout {
+        grid-template-columns: 1.5fr 4.5fr;
+        gap: 20px;
+        padding-inline: 2rem;
+    }
+}
+
+/* تبلت */
+@media (max-width: 992px) {
+    .layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .filters {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 1.5rem;
+    }
+
+    .filters .filteritem {
+        border-bottom: none;
+        padding-block-end: 0;
+        flex: 1 1 45%;
+    }
+}
+
+/* موبایل بزرگ */
+@media (max-width: 768px) {
+    .layout {
+        padding-block: 3rem;
+        padding-inline: 1.5rem;
+    }
+
+    .filters {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .left .sorting {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        height: auto;
+        padding: 1rem;
+    }
+
+    .left .sorting .sortingItem {
+        font-size: 0.9rem;
+    }
+}
+
+/* موبایل کوچک */
+@media (max-width: 576px) {
+    .layout {
+        padding-inline: 1rem;
+    }
+
+    .filters {
+        padding: 1rem;
+    }
+
+    .left .sorting {
+        gap: 8px;
+    }
 }
