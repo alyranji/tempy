@@ -1,0 +1,40 @@
+.hero {
+  background-image: var(--gradient-cosmic-night);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+
+  >div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--cc-pure-white);
+    gap: 35px;
+    margin-block: 5rem;
+
+
+    text-align: center;
+    padding-inline: calc(max(100% - 1400px, 16px) / 2);
+
+
+    >h1 {
+      font-size: var(--f-36-90);
+      font-weight: bold;
+
+      >span {
+        background-image: var(--gradient-emerald-sky);
+        background-size: 100% 5px;
+        background-position: 0 95%;
+        background-repeat: no-repeat;
+        transition: all 0.35s ease;
+      }
+    }
+
+    >p {
+      font-size: var(--f-18-20);
+    }
+  }
+}

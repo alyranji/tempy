@@ -1,0 +1,21 @@
+export type Template = {
+  id: string;
+  title: string;
+  image: string;
+  description?: string;
+  demo_url: string;
+  slug: string;
+  price: number;
+  isRTL: number;
+  createdAt: Date;
+  updatedAt: Date;
+  score: 1 | 2 | 3 | 4 | 5;
+  sellCount: number;
+  reviewCount: number;
+  status: "active" | "draft";
+  categories: string[];
+  tags: string[];
+  features: string[];
+  addons: string[];
+  requirements: string[];
+};

@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --cc-sky-blue: #4aaaff;
+  --cc-azure-blue: #0077e0;
+  --cc-royal-blue: #197bff;
+  --cc-jet-black: #000000;
+  --cc-charcoal-black: #0b0b0b;
+  --cc-rich-black: #040404;
+  --cc-graphite: #191919;
+  --cc-gunmetal: #222d39;
+  --cc-dark-slate: #272727;
+  --cc-navy-blue: #091b49;
+  --cc-baby-blue: #cbe7ff;
+  --cc-sky-mist: #e5f0fd;
+  --cc-snow-white: #f8fbff;
+  --cc-peach-white: #fff7f3;
+  --cc-silver-gray: #c7c7c7;
+  --cc-slate-gray: #8792a1;
+  --cc-dim-gray: #636363;
+  --cc-ash-gray: #424958;
+  --cc-mint-green: #77d585;
+  --cc-sky-cyan: #4cbaf1;
+  --cc-pure-white: #ffffff;
+  --cc-cool-gray: #666666;
+  --cc-dark-charcoal: #333333;
+
+  --cc-gray-translucent: hsla(0, 0%, 47%, 0.1);
+  --cc-white-faint: hsla(0, 0%, 100%, 0.3);
+  --cc-white-soft: hsla(0, 0%, 100%, 0.8);
+  --cc-dark-overlay: rgba(39, 39, 39, 0.8);
+
+  --gradient-cosmic-night: radial-gradient(circle farthest-corner at 10% 20%,
+      #0b0b0b 0%,
+      #091b49 50.6%,
+      #0b0b0b 100.2%);
+
+  --gradient-brand-blue: linear-gradient(141deg, #4aaaff, #0077e0);
+  --gradient-brand-blue-reverse: linear-gradient(141deg, #0077e0, #4aaaff);
+
+  --gradient-lavender: linear-gradient(90deg, #f8f4ff, #e0d7f7 0.01%, #f2ecff);
+  --gradient-peach: linear-gradient(62.63deg, #ffebe3 5.74%, #ffcebd 93.81%);
+  --gradient-sunset: linear-gradient(90deg, #ff375b 2.02%, #ffa945 96.02%);
+  --gradient-emerald-sky: linear-gradient(90deg, #78d682, #4cbaf1);
+  --gradient-soft-violet: linear-gradient(90deg, #f8f7fe, #ece9ff);
+  --gradient-icy-blue: linear-gradient(90deg, #edfafe, #d9f6ff);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #fdfdfd;
+}
