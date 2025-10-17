@@ -32,7 +32,8 @@ export default function RootLayout({
         <html lang="fa" dir="rtl">
           <body className={`${yekanBakhPro.className}`}>
             <Header />
-            {children}
+            <main>{children}</main>
+
             <Footer />
           </body>
         </html>
