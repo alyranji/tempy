@@ -33,6 +33,7 @@ function TemplateFilterLayout(): ReactNode {
 
   const [minPrice, setMinPrice] = useState<number>(2500000);
   const [maxPrice, setMaxPrice] = useState<number>(5000000);
+  const [reviewCount, setReviewCount] = useState<number>();
 
   useEffect(() => {
     async function fetchTemplates(): Promise<void> {
@@ -41,6 +42,7 @@ function TemplateFilterLayout(): ReactNode {
           isRtl,
           sort,
           price_max: maxPrice,
+          review_count: reviewCount,
         });
         setTemplates(data);
       } catch (err) {
@@ -51,7 +53,7 @@ function TemplateFilterLayout(): ReactNode {
     }
 
     fetchTemplates();
-  }, [isRtl, sort, maxPrice]);
+  }, [isRtl, sort, maxPrice, reviewCount]);
 
   const setPrice = (e: ChangeEvent<HTMLInputElement>): void => {
     setMaxPrice(parseInt(e.target.value));
@@ -137,20 +139,23 @@ function TemplateFilterLayout(): ReactNode {
 
                   <input
                     type="checkbox"
-                    checked={!!isRtl}
-                    onChange={() => setIsRtl((old) => (old ? undefined : true))}
+                    checked={!!reviewCount}
+                    onChange={() =>
+                      setReviewCount((old) => (old ? undefined : 100))
+                    } // more than 100 review :D is vizhe
                   />
                   <span className={styles.slider}></span>
                 </label>
               </div>
               <div className={styles.checkboxRow}>
-                <label className={styles.toggle}>
+                <label htmlFor="rtl-checkbox" className={styles.toggle}>
                   <div>
                     <LanguageSquare />
                     <span className={styles.labelText}>فقط محصولات فارسی</span>
                   </div>
 
                   <input
+                    id="rtl-checkbox"
                     type="checkbox"
                     checked={!!isRtl}
                     onChange={() => setIsRtl((old) => (old ? undefined : true))}

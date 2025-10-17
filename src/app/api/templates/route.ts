@@ -18,6 +18,7 @@ export async function GET(req: Request): Promise<NextResponse> {
     const page = searchParams.get("page");
     const search = searchParams.get("search");
     const minScore = searchParams.get("min_score");
+    const reviewCount = searchParams.get("review_count");
 
     const category = searchParams.getAll("category");
     const tag = searchParams.getAll("tag");
@@ -70,6 +71,10 @@ export async function GET(req: Request): Promise<NextResponse> {
       values.push(Number(minScore));
     }
 
+    if (reviewCount) {
+      query += " AND t.reviewCount >= ?";
+      values.push(Number(reviewCount));
+    }
     if (search) {
       query += " AND (t.title LIKE ? OR t.description LIKE ?)";
       values.push(`%${search}%`, `%${search}%`);

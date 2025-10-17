@@ -7,6 +7,7 @@ export interface FilterParams {
   page?: number;
   search?: string;
   min_score?: number;
+  review_count?: number;
   category?: string[];
   tag?: string[];
   addons?: string[];
