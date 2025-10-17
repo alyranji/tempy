@@ -27,6 +27,7 @@ function TemplateFilterLayout(): ReactNode {
   const [templates, setTemplates] = useState<Template[]>();
   const [openAccordion, setOpenAccordion] = useState<boolean>(true);
   const [isRtl, setIsRtl] = useState<boolean | undefined>();
+  const [category, setCategory] = useState<string>();
   const [sort, setSort] = useState<
     "price_asc" | "price_desc" | "newest" | "popular"
   >("newest");
@@ -43,6 +44,7 @@ function TemplateFilterLayout(): ReactNode {
           sort,
           price_max: maxPrice,
           review_count: reviewCount,
+          category,
         });
         setTemplates(data);
       } catch (err) {
@@ -53,12 +55,26 @@ function TemplateFilterLayout(): ReactNode {
     }
 
     fetchTemplates();
-  }, [isRtl, sort, maxPrice, reviewCount]);
+  }, [isRtl, sort, maxPrice, reviewCount, category]);
 
   const setPrice = (e: ChangeEvent<HTMLInputElement>): void => {
     setMaxPrice(parseInt(e.target.value));
     setMinPrice(parseInt(e.target.min));
   };
+
+  const categoryData = [
+    { value: undefined, label: "همه" },
+    { value: "store", label: "فروشگاهی" },
+    { value: "corp", label: "شرکتی" },
+    { value: "portfolio", label: "نمونه کار" },
+    { value: "personal", label: "شخصی" },
+    { value: "blog", label: "وبلاگ" },
+    { value: "news", label: "خبری" },
+    { value: "marketing", label: "دیجیتال مارکتینگ" },
+    { value: "startup", label: "استارتاپی" },
+    { value: "edu", label: "آموزشی" },
+    { value: "landing", label: "لندینگ پیج" },
+  ];
   return (
     <div className={styles.layout}>
       <div className={styles.sidebar}>
@@ -66,35 +82,31 @@ function TemplateFilterLayout(): ReactNode {
           <h2 className={styles.title}>فیلتر قالب‌ها</h2>
 
           <div className={styles.section}>
-            <button
-              className={styles.sectionToggle}
-              onClick={() => setOpenAccordion((old) => !old)}
-            >
+            <button className={styles.sectionToggle}>
               <Category />
               <h3 className={styles.sectionTitle}> بر اساس دسته‌بندی</h3>
-              {openAccordion ? (
-                <ArrowDown2 className={styles.icon} />
-              ) : (
-                <ArrowUp2 className={styles.icon} />
-              )}
+
+              <ArrowDown2 className={styles.icon} />
             </button>
 
-            <div
-              className={clsx(styles.sectionContent)}
-              style={{
-                display: `${openAccordion ? "block" : "none"}`,
-              }}
-            >
-              <a href="#" className={`${styles.categoryLink} ${styles.active}`}>
-                <div className={styles.activeDot}></div>
-                <span>صفحه فرود</span>
-              </a>
-              <a href="#" className={styles.categoryLink}>
-                <span>شرکتی</span>
-              </a>
-              <a href="#" className={styles.categoryLink}>
-                <span>فروشگاهی</span>
-              </a>
+            <div className={styles.sectionContent}>
+              {categoryData.map((item, index) => (
+                <a
+                  key={index}
+                  href="#"
+                  className={clsx(
+                    styles.categoryLink,
+                    category === item.value && styles.active,
+                  )}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCategory(item.value);
+                  }}
+                >
+                  <div className={styles.activeDot}></div>
+                  <span>{item.label}</span>
+                </a>
+              ))}
             </div>
           </div>
 
@@ -141,7 +153,7 @@ function TemplateFilterLayout(): ReactNode {
                     type="checkbox"
                     checked={!!reviewCount}
                     onChange={() =>
-                      setReviewCount((old) => (old ? undefined : 100))
+                      setReviewCount((old) => (old ? undefined : 250))
                     } // more than 100 review :D is vizhe
                   />
                   <span className={styles.slider}></span>

@@ -29,7 +29,7 @@ function TemplateCard({ template }: TemplateCardProps): ReactNode {
           className={styles.image}
         />
 
-        {template.reviewCount > 100 && (
+        {template.reviewCount > 250 && (
           <span className={styles.badge}>ویژه</span>
         )}
 

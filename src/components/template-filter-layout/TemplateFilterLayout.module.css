@@ -59,7 +59,8 @@
                 .sectionContent {
                     margin-top: 16px;
                     display: flex;
-                    flex-direction: column;
+                    flex-wrap: wrap;
+                    row-gap: 10px;
 
                     .categoryLink {
                         display: inline-flex;
@@ -112,6 +113,7 @@
                         gap: 10px;
                         justify-content: space-between;
                         margin-block: 12px;
+                        inline-size: 100%;
 
                         .toggle {
                             position: relative;
