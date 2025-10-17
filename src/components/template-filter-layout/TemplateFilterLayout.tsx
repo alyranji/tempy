@@ -21,19 +21,15 @@ function TemplateFilterLayout(): ReactNode {
   const [templates, setTemplates] = useState<Template[]>();
   const [loading, setLoading] = useState(true);
 
-  const [isRtl, setIsRtl] = useState<boolean>();
+  const [isRtl, setIsRtl] = useState<boolean | undefined>();
   const [sort, setSort] = useState<
     "price_asc" | "price_desc" | "newest" | "popular"
   >("newest");
 
   useEffect(() => {
-    console.log(isRtl);
-  }, [isRtl]);
-
-  useEffect(() => {
     async function fetchTemplates(): Promise<void> {
       try {
-        const data = await filterTemplates({ isRtl: isRtl, sort: sort });
+        const data = await filterTemplates({ isRtl, sort });
         setTemplates(data);
       } catch (err) {
         console.error(err);
@@ -61,7 +57,8 @@ function TemplateFilterLayout(): ReactNode {
             type="checkbox"
             id="check-rtl-input"
             name="check-rtl"
-            onChange={(e) => setIsRtl(e.target.checked)}
+            checked={!!isRtl}
+            onChange={() => setIsRtl((old) => (old ? undefined : true))}
           />
           راستچین
         </label>
