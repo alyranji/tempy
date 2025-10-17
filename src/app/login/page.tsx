@@ -10,6 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { showToast } from "@/components/toast/showToast";
+
 import { loginSchema } from "@/schemas/login.schema";
 
 import styles from "./login-page.module.css";
@@ -40,12 +42,13 @@ export default function LoginPage(): ReactNode {
       const result = await res.json();
 
       if (!res.ok || !result.success) {
-        alert(result.message || "ورود ناموفق بود.");
+        // alert(result.message || "ورود ناموفق بود.");
+        showToast("ورود ناموفق بود.", "error");
         return;
       }
 
       localStorage.setItem("user", JSON.stringify(result.user));
-      alert("ورود با موفقیت انجام شد ✅");
+      showToast("ورود شما انجام شد.", "success");
 
       router.push("/dashboard");
     } catch (error) {

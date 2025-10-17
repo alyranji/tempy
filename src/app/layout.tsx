@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 
 import { Footer } from "@/components/footer/footer";
 import Header from "@/components/header/header";
+import { ToastProvider } from "@/components/toast/showToast";
 
 import CartProvider from "@/providers/CartProvider";
 
@@ -33,7 +34,7 @@ export default function RootLayout({
           <body className={`${yekanBakhPro.className}`}>
             <Header />
             <main>{children}</main>
-
+            <ToastProvider />
             <Footer />
           </body>
         </html>
