@@ -5,27 +5,170 @@
     gap: 24px;
     padding-inline: calc(max(100% - 1400px, 32px) / 2);
 
-    .filters {
-        background-color: var(--cc-pure-white);
-        border: 1px solid var(--cc-baby-blue);
-        border-radius: 16px;
-        padding: 2rem;
+    .sidebar {
+        position: sticky;
+        top: 6rem;
         display: flex;
         flex-direction: column;
-        gap: 36px;
+        gap: 24px;
 
-        .filteritem {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid var(--cc-silver-gray);
-            padding-block-end: 12px;
+        .card {
+            background: var(--color-card, #fff);
+            border: 1px solid var(--color-border, #ddd);
+            border-radius: 8px;
+            padding: 24px;
 
-            .icon {
-                color: var(--cc-sky-blue);
+            .title {
+                font-size: 1.125rem;
+                font-weight: bold;
+                margin-bottom: 16px;
+            }
+
+            .section {
+                border-bottom: 1px solid var(--color-border, #ddd);
+                padding: 24px 0;
+
+                &:last-child {
+                    border-bottom: none;
+                    padding-bottom: 0;
+                }
+
+                .sectionToggle {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    background: none;
+                    border: none;
+                    text-align: right;
+                    cursor: pointer;
+
+                    .icon {
+                        width: 16px;
+                        height: 16px;
+                        transition: transform 0.2s;
+                        margin-inline-start: auto;
+                    }
+
+                    .sectionTitle {
+                        font-weight: 600;
+                        font-size: 1rem;
+                        margin-inline-start: 8px;
+                    }
+                }
+
+                .sectionContent {
+                    margin-top: 16px;
+                    display: flex;
+                    flex-direction: column;
+
+                    .categoryLink {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        color: var(--color-text, #333);
+                        text-decoration: none;
+                        transition: color 0.2s;
+                        padding: 8px 16px;
+
+                        &:hover {
+                            color: var(--color-primary, #0070f3);
+                        }
+
+                        &.active {
+                            color: var(--color-primary, #0070f3);
+                            font-weight: 600;
+
+                            .activeDot {
+                                width: 8px;
+                                height: 8px;
+                                background-color: var(--color-primary, #0070f3);
+                                border-radius: 50%;
+                            }
+                        }
+                    }
+
+                    .slider {
+                        width: 100%;
+                        direction: ltr;
+                    }
+
+                    .priceLabels {
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 0.875rem;
+                        color: var(--color-muted, #666);
+                    }
+
+                    .checkboxRow {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        justify-content: space-between;
+                        margin-block: 12px;
+
+                        .toggle {
+                            position: relative;
+                            display: inline-flex;
+                            align-items: center;
+                            cursor: pointer;
+                            user-select: none;
+                            width: 100%;
+                            justify-content: space-between;
+
+                            >div {
+                                display: flex;
+                                gap: 10px;
+                                align-items: center;
+                            }
+
+                            input {
+                                display: none;
+                            }
+
+                            .slider {
+                                position: relative;
+                                width: 46px;
+                                height: 26px;
+                                background-color: #ccc;
+                                border-radius: 999px;
+                                transition: background-color 0.3s ease;
+
+                                &::before {
+                                    content: "";
+                                    position: absolute;
+                                    top: 3px;
+                                    left: 3px;
+                                    width: 20px;
+                                    height: 20px;
+                                    background-color: #fff;
+                                    border-radius: 50%;
+                                    transition: transform 0.3s ease;
+                                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                                }
+                            }
+
+                            input:checked+.slider {
+                                background-color: #34c759;
+
+                                &::before {
+                                    transform: translateX(20px);
+                                }
+                            }
+
+                            .labelText {
+                                font-size: 16px;
+                                color: #333;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
+
+
+
+
 
     .left {
         display: flex;
@@ -38,7 +181,6 @@
             height: 5rem;
             background-color: var(--cc-pure-white);
             border-radius: 16px;
-            padding-inline: 1.5rem;
             flex-wrap: wrap;
             /* ✅ برای وقتی جا کم می‌شه */
 
@@ -56,6 +198,8 @@
             }
         }
     }
+
+
 }
 
 /* ✅ --- ریسپانسیو‌ها --- */
