@@ -25,7 +25,6 @@ export async function filterTemplates(
   const query = new URLSearchParams(); //ye object khali {} amadeye append kardan
 
   const queryString = createFilterQuery(params, query);
-  console.log("queryString: ", queryString);
   const res = await fetch(`/api/templates?${queryString}`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
@@ -37,6 +36,5 @@ export async function filterTemplates(
   }
 
   const data = await res.json();
-  console.log("data.templates: ", data.templates);
   return data.templates;
 }
