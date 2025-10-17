@@ -62,26 +62,33 @@
                     flex-direction: column;
 
                     .categoryLink {
-                        display: flex;
+                        display: inline-flex;
                         align-items: center;
-                        gap: 8px;
-                        color: var(--color-text, #333);
+                        justify-content: center;
+                        padding: 6px 14px;
+                        border-radius: 999px;
+                        gap: 4px;
+                        background-color: #f3f4f6;
+                        color: #333;
+                        font-size: 14px;
                         text-decoration: none;
-                        transition: color 0.2s;
-                        padding: 8px 16px;
+                        transition: all 0.25s ease;
+                        border: 1px solid transparent;
+                        margin-inline-end: 5px;
 
                         &:hover {
-                            color: var(--color-primary, #0070f3);
+                            background-color: #e5e7eb;
                         }
 
                         &.active {
-                            color: var(--color-primary, #0070f3);
-                            font-weight: 600;
+                            background-color: #2563eb;
+                            color: #fff;
+                            border-color: #2563eb;
 
                             .activeDot {
                                 width: 8px;
                                 height: 8px;
-                                background-color: var(--color-primary, #0070f3);
+                                background-color: var(--cc-mint-green);
                                 border-radius: 50%;
                             }
                         }
