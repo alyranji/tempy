@@ -29,7 +29,9 @@ function TemplateCard({ template }: TemplateCardProps): ReactNode {
           className={styles.image}
         />
 
-        {template.sellCount > 20 && <span className={styles.badge}>ویژه</span>}
+        {template.reviewCount > 100 && (
+          <span className={styles.badge}>ویژه</span>
+        )}
 
         <div className={styles.overlay}>
           <Button variant="light" size="card">
@@ -54,11 +56,11 @@ function TemplateCard({ template }: TemplateCardProps): ReactNode {
         </div>
 
         <div className={styles.tags}>
-          {/* {template.tags.slice(0, 3).map((tag, index) => (
+          {template.tags.slice(0, 3).map((tag, index) => (
             <span key={index} className={styles.tag}>
-              {tag.label}
+              {tag}
             </span>
-          ))} */}
+          ))}
         </div>
 
         <div className={styles.footer}>
