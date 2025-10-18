@@ -128,8 +128,10 @@ function TemplateFilterLayout(): ReactNode {
                 className={styles.slider}
               />
               <div className={styles.priceLabels}>
-                <span>{maxPrice?.toLocaleString("fa-IR")}تومان</span>
+                از
                 <span>{minPrice?.toLocaleString("fa-IR")} تومان</span>
+                تا
+                <span>{maxPrice?.toLocaleString("fa-IR")}تومان</span>
               </div>
             </div>
           </div>
