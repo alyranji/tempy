@@ -13,12 +13,12 @@ export default function DashboardPage(): ReactNode {
 
   return (
     <div className={styles.dashboard}>
-      <aside className={styles.sidebar}>
+      {/* <aside className={styles.sidebar}>
         <Sidebar active={activeSection} onSelect={setActiveSection} />
-      </aside>
+      </aside> */}
 
       <main className={styles.main}>
-        {activeSection === "add-template" && <AddTemplateForm />}
+        <AddTemplateForm />
       </main>
     </div>
   );

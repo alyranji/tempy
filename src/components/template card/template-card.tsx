@@ -29,8 +29,8 @@ function TemplateCard({ template }: TemplateCardProps): ReactNode {
           className={styles.image}
         />
 
-        {template.reviewCount > 250 && (
-          <span className={styles.badge}>ویژه</span>
+        {template.sellCount >= 100 && (
+          <span className={styles.badge}>پرفروش</span>
         )}
 
         <div className={styles.overlay}>
@@ -66,13 +66,12 @@ function TemplateCard({ template }: TemplateCardProps): ReactNode {
         <div className={styles.footer}>
           <Link href={`/template/${template.slug}`}>
             <Button variant="outline" size="card">
-              {" "}
               مشاهده جزئیات
             </Button>
           </Link>
           <div className={styles.priceBox}>
             <span className={styles.price}>
-              {template.price.toLocaleString("fa-IR")}
+              {Math.round(template.price).toLocaleString("fa-IR")}
             </span>
             <span className={styles.currency}>تومان</span>
           </div>

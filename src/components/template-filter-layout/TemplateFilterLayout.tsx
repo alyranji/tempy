@@ -25,26 +25,26 @@ import styles from "./TemplateFilterLayout.module.css";
 function TemplateFilterLayout(): ReactNode {
   const [loading, setLoading] = useState(true);
   const [templates, setTemplates] = useState<Template[]>();
-  const [openAccordion, setOpenAccordion] = useState<boolean>(true);
-  const [isRtl, setIsRtl] = useState<boolean | undefined>();
+  const [rtl, setRtl] = useState<boolean | undefined>();
   const [category, setCategory] = useState<string>();
   const [sort, setSort] = useState<
     "price_asc" | "price_desc" | "newest" | "popular"
   >("newest");
-
-  const [minPrice, setMinPrice] = useState<number>(2500000);
-  const [maxPrice, setMaxPrice] = useState<number>(5000000);
+  const [sellCount, setSellCount] = useState<number | undefined>();
+  const [minPrice, setMinPrice] = useState<number | undefined>(2500000);
+  const [maxPrice, setMaxPrice] = useState<number | undefined>(10000000);
   const [reviewCount, setReviewCount] = useState<number>();
 
   useEffect(() => {
     async function fetchTemplates(): Promise<void> {
       try {
         const data = await filterTemplates({
-          isRtl,
+          rtl,
           sort,
           price_max: maxPrice,
           review_count: reviewCount,
-          category,
+          categories: category ? [category] : undefined,
+          sell_count: sellCount,
         });
         setTemplates(data);
       } catch (err) {
@@ -55,7 +55,7 @@ function TemplateFilterLayout(): ReactNode {
     }
 
     fetchTemplates();
-  }, [isRtl, sort, maxPrice, reviewCount, category]);
+  }, [rtl, sort, maxPrice, reviewCount, category, sellCount]);
 
   const setPrice = (e: ChangeEvent<HTMLInputElement>): void => {
     setMaxPrice(parseInt(e.target.value));
@@ -64,9 +64,9 @@ function TemplateFilterLayout(): ReactNode {
 
   const categoryData = [
     { value: undefined, label: "همه" },
+    { value: "portfolio", label: "نمونه کار" },
     { value: "store", label: "فروشگاهی" },
     { value: "corp", label: "شرکتی" },
-    { value: "portfolio", label: "نمونه کار" },
     { value: "personal", label: "شخصی" },
     { value: "blog", label: "وبلاگ" },
     { value: "news", label: "خبری" },
@@ -84,7 +84,7 @@ function TemplateFilterLayout(): ReactNode {
           <div className={styles.section}>
             <button className={styles.sectionToggle}>
               <Category />
-              <h3 className={styles.sectionTitle}> بر اساس دسته‌بندی</h3>
+              <h3 className={styles.sectionTitle}> بر اساس کسب و کار</h3>
 
               <ArrowDown2 className={styles.icon} />
             </button>
@@ -131,7 +131,7 @@ function TemplateFilterLayout(): ReactNode {
                 از
                 <span>{minPrice?.toLocaleString("fa-IR")} تومان</span>
                 تا
-                <span>{maxPrice?.toLocaleString("fa-IR")}تومان</span>
+                <span>{maxPrice?.toLocaleString("fa-IR")} تومان</span>
               </div>
             </div>
           </div>
@@ -148,15 +148,15 @@ function TemplateFilterLayout(): ReactNode {
                 <label className={styles.toggle}>
                   <div>
                     <Crown />
-                    <span className={styles.labelText}>فقط محصولات ویژه</span>
+                    <span className={styles.labelText}>فقط محصولات پرفروش</span>
                   </div>
 
                   <input
                     type="checkbox"
-                    checked={!!reviewCount}
+                    checked={!!sellCount}
                     onChange={() =>
-                      setReviewCount((old) => (old ? undefined : 250))
-                    } // more than 100 review :D is vizhe
+                      setSellCount((old) => (old ? undefined : 100))
+                    }
                   />
                   <span className={styles.slider}></span>
                 </label>
@@ -171,8 +171,8 @@ function TemplateFilterLayout(): ReactNode {
                   <input
                     id="rtl-checkbox"
                     type="checkbox"
-                    checked={!!isRtl}
-                    onChange={() => setIsRtl((old) => (old ? undefined : true))}
+                    checked={!!rtl}
+                    onChange={() => setRtl((old) => (old ? undefined : true))}
                   />
                   <span className={styles.slider}></span>
                 </label>
