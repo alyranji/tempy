@@ -17,4 +17,21 @@ export type Template = {
   tags: string[];
   features: string[];
   addons: string[];
+  requirements: string[];
+};
+
+export type InsertType = {
+  title: string;
+  image: string | null;
+  description?: string;
+  demo_url?: string;
+  slug: string;
+  price: number;
+  rtl: boolean;
+  status: "active" | "draft";
+  categories?: string[];
+  tags?: string[];
+  features?: string[];
+  addons?: string[];
+  requirements?: string[];
 };

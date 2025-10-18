@@ -1,4 +1,4 @@
-// app/api/templates/route.ts
+// src/app/api/templates/route.ts
 import { GetDBParams } from "@/shared/common";
 import fs from "fs";
 import mysql from "mysql2/promise";
@@ -9,89 +9,90 @@ export async function POST(req: Request) {
   try {
     const formData = await req.formData();
 
+    // دریافت فیلدها
     const title = formData.get("title") as string;
-    const description = (formData.get("description") as string) || null;
-    const price = formData.get("price") ? Number(formData.get("price")) : 0;
-    const demo_url = (formData.get("demo_url") as string) || null;
-    const image = formData.get("image") as File | null;
-    const rtl = formData.get("isRTL") === "true" ? 1 : 0;
+    const description = formData.get("description") as string;
+    const demo_url = formData.get("demo_url") as string;
+    const slug = formData.get("slug") as string;
+    const price = Number(formData.get("price"));
+    const rtl = formData.get("rtl") === "true";
+    const status = (formData.get("status") as "active" | "draft") || "active";
 
-    const categories = ((formData.get("categories") as string) || "")
-      .split(",")
-      .map((v) => v.trim())
-      .filter(Boolean);
-
-    const tags = ((formData.get("tags") as string) || "")
-      .split(",")
-      .map((v) => v.trim())
-      .filter(Boolean);
-
-    const features = ((formData.get("features") as string) || "")
-      .split(",")
-      .map((v) => v.trim())
-      .filter(Boolean);
-
-    const addons = ((formData.get("addons") as string) || "")
-      .split(",")
-      .map((v) => v.trim())
-      .filter(Boolean);
-
-    if (!title) {
-      return NextResponse.json({
-        success: false,
-        message: "عنوان الزامی است.",
-      });
-    }
-
-    const slug = `${title.replace(/\s+/g, "-")}-${Date.now()}`;
+    // آرایه‌ها را parse کن
+    const categories = formData.get("categories")
+      ? JSON.stringify(JSON.parse(formData.get("categories") as string))
+      : JSON.stringify([]);
+    const tags = formData.get("tags")
+      ? JSON.stringify(JSON.parse(formData.get("tags") as string))
+      : JSON.stringify([]);
+    const features = formData.get("features")
+      ? JSON.stringify(JSON.parse(formData.get("features") as string))
+      : JSON.stringify([]);
+    const addons = formData.get("addons")
+      ? JSON.stringify(JSON.parse(formData.get("addons") as string))
+      : JSON.stringify([]);
+    const requirements = formData.get("requirements")
+      ? JSON.stringify(JSON.parse(formData.get("requirements") as string))
+      : JSON.stringify([]);
 
     // ذخیره تصویر
-    const uploadDir = path.join(process.cwd(), "public", "templates");
-    if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+    const imageFile = formData.get("image") as File | null;
+    let imagePath = "";
+    if (imageFile && imageFile.name) {
+      const arrayBuffer = await imageFile.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
 
-    let imageUrl: string | null = null;
-    if (image && image.size > 0) {
-      const ext = path.extname(image.name) || ".jpg";
-      const filename = `${slug}${ext}`;
-      const filepath = path.join(uploadDir, filename);
-      const buffer = Buffer.from(await image.arrayBuffer());
-      fs.writeFileSync(filepath, buffer);
-      imageUrl = `/templates/${filename}`;
+      const ext = path.extname(imageFile.name);
+      const fileName = `${slug}${ext}`;
+      const uploadDir = path.join(process.cwd(), "public", "templates");
+
+      if (!fs.existsSync(uploadDir))
+        fs.mkdirSync(uploadDir, { recursive: true });
+
+      const filePath = path.join(uploadDir, fileName);
+      fs.writeFileSync(filePath, buffer);
+      imagePath = `/templates/${fileName}`;
     }
 
+    // اتصال به دیتابیس
     const connection = await mysql.createConnection(GetDBParams());
 
-    await connection.execute(
-      `INSERT INTO templates
-      (title, description, price, demo_url, image, slug, rtl, categories, tags, features, addons)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        title,
-        description,
-        price,
-        demo_url,
-        imageUrl,
-        slug,
-        rtl,
-        JSON.stringify(categories),
-        JSON.stringify(tags),
-        JSON.stringify(features),
-        JSON.stringify(addons),
-      ],
-    );
+    const insertQuery = `
+      INSERT INTO templates
+      (title, description, demo_url, slug, price, rtl, status, categories, tags, features, addons, requirements, image, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+    `;
+
+    const values = [
+      title,
+      description || "",
+      demo_url || "",
+      slug,
+      price,
+      rtl ? 1 : 0,
+      status,
+      categories,
+      tags,
+      features,
+      addons,
+      requirements,
+      imagePath,
+    ];
+
+    const [result] = await connection.execute(insertQuery, values);
 
     await connection.end();
 
     return NextResponse.json({
-      success: true,
-      message: "تمپلیت با موفقیت ذخیره شد.",
-      slug,
+      status: 200,
+      message: "Template inserted successfully",
+      id: (result as any).insertId,
     });
-  } catch (error: any) {
-    console.error("❌ Error in /api/templates:", error);
-    return NextResponse.json({
-      success: false,
-      message: error.message,
-    });
+  } catch (error) {
+    console.error("Error inserting template:", error);
+    return NextResponse.json(
+      { status: 500, message: "Failed to insert template" },
+      { status: 500 },
+    );
   }
 }
