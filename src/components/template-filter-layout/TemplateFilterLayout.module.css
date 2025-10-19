@@ -1,5 +1,5 @@
 .layout {
-    padding-block: 5rem;
+    padding-block: 2rem;
     display: grid;
     grid-template-columns: 2fr 6fr;
     gap: 24px;
@@ -17,6 +17,8 @@
             border: 1px solid var(--color-border, #ddd);
             border-radius: 8px;
             padding: 24px;
+            position: sticky;
+            top: 110px;
 
             .title {
                 font-size: 1.125rem;
@@ -189,10 +191,10 @@
             gap: 24px;
             align-items: center;
             height: 5rem;
+            justify-content: center;
             background-color: var(--cc-pure-white);
             border-radius: 16px;
-            flex-wrap: wrap;
-            /* ✅ برای وقتی جا کم می‌شه */
+            flex-direction: row;
 
             .sortingItem {
                 cursor: pointer;
@@ -214,38 +216,19 @@
 
 /* ✅ --- ریسپانسیو‌ها --- */
 
-/* لپ‌تاپ متوسط */
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
     .layout {
-        grid-template-columns: 1.5fr 4.5fr;
         gap: 20px;
-        padding-inline: 2rem;
-    }
-}
-
-/* تبلت */
-@media (max-width: 992px) {
-    .layout {
+        padding-inline: 1rem;
         grid-template-columns: 1fr;
-        gap: 32px;
-    }
 
-    .filters {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 1.5rem;
-    }
-
-    .filters .filteritem {
-        border-bottom: none;
-        padding-block-end: 0;
-        flex: 1 1 45%;
+        .sidebar {
+            display: none;
+        }
     }
 }
 
-/* موبایل بزرگ */
+
 @media (max-width: 768px) {
     .layout {
         padding-block: 3rem;
@@ -270,17 +253,23 @@
     }
 }
 
-/* موبایل کوچک */
 @media (max-width: 576px) {
     .layout {
-        padding-inline: 1rem;
-    }
-
-    .filters {
         padding: 1rem;
+
+        .left {
+
+            .sorting {
+                gap: 12px;
+                scrollbar-width: none;
+                overflow-x: scroll;
+                padding: 0.5rem;
+
+
+            }
+        }
     }
 
-    .left .sorting {
-        gap: 8px;
-    }
+
+
 }

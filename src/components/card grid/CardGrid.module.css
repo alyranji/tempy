@@ -11,17 +11,13 @@
     @media (max-width: 1200px) {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto;
-        padding-inline: 24px;
     }
 
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
-        padding-inline: 16px;
-        padding-block: 4rem;
 
         >div:first-child {
-            height: 150px;
 
             >h2 {
                 /* font-size: var(--f-20-48); */
