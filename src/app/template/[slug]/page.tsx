@@ -148,7 +148,7 @@ export default function Page({ params }: TemplatePageProps): ReactNode {
           <aside className={styles.sidebar}>
             <div className={styles.priceBox}>
               <div className={styles.price}>
-                {template.price.toLocaleString("fa-IR")} تومان
+                {Math.round(template.price).toLocaleString("fa-IR")} تومان
               </div>
               <p>خرید یک‌باره - مالکیت دائمی</p>
 
