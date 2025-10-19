@@ -191,10 +191,12 @@
             gap: 24px;
             align-items: center;
             height: 5rem;
-            justify-content: center;
             background-color: var(--cc-pure-white);
             border-radius: 16px;
             flex-direction: row;
+            font-size: var(--f-14-16);
+            white-space: nowrap;
+
 
             .sortingItem {
                 cursor: pointer;
@@ -248,9 +250,7 @@
         padding: 1rem;
     }
 
-    .left .sorting .sortingItem {
-        font-size: 0.9rem;
-    }
+
 }
 
 @media (max-width: 576px) {

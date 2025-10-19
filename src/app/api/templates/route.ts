@@ -98,7 +98,8 @@ export async function GET(req: Request): Promise<NextResponse> {
       const offset = (pageNum - 1) * Number(limit);
       query += ` LIMIT ${offset}, ${limit}`;
     }
-
+    console.log("query: ", query);
+    console.log("values: ", values);
     const [rows] = await connection.execute(query, values);
 
     const templates: Template[] = (rows as any[]).map((template) => ({
