@@ -7,7 +7,7 @@
     position: sticky;
     top: 0;
     background-color: var(--cc-pure-white);
-    z-index: 99;
+    z-index: 2;
 
 
 
@@ -40,7 +40,7 @@
             position: relative;
 
             .cartcount {
-                background-color: black;
+                background-color: var(--cc-azure-blue);
                 color: white;
                 position: absolute;
                 top: 5px;

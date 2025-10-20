@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 import { Eye, ShoppingCart } from "iconsax-reactjs";
 import Image from "next/image";
@@ -17,7 +17,22 @@ type TemplateCardProps = {
 };
 
 function TemplateCard({ template }: TemplateCardProps): ReactNode {
-  const { addItem } = useCart();
+  const { addItem, items } = useCart();
+  const [isInCart, setisInCart] = useState(false);
+
+  useEffect(() => {
+    if (items?.filter((item) => item.id === template.id).length) {
+      setisInCart(true);
+    } else {
+      setisInCart(false);
+    }
+  }, [items, template.id]);
+
+  const handleAddToCart = (): void => {
+    addItem(template);
+    setisInCart(true);
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.imageWrapper}>
@@ -37,12 +52,14 @@ function TemplateCard({ template }: TemplateCardProps): ReactNode {
           <Button variant="light" size="card">
             پیش‌نمایش
           </Button>
+
           <Button
             variant="primary"
             size="card"
-            onClick={() => addItem(template)}
+            disabled={isInCart}
+            onClick={() => handleAddToCart()}
           >
-            افزودن به سبد خرید
+            {isInCart ? "محصول اضافه شد" : "افزودن به سبد خرید"}
           </Button>
         </div>
       </div>

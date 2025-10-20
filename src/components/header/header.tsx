@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 
 // import { useState } from "react";
 
@@ -18,17 +18,17 @@ import Link from "next/link";
 import { useCart } from "@/providers/CartProvider";
 
 import { Button } from "../button/button";
-
-// import CartDrawer from "../cart drawer/CartDrawer";
+import Drawer from "../drawer/Drawer";
 
 import styles from "./header.module.css";
 
 const Header = (): ReactNode => {
   const { items } = useCart();
-  // const [cartOpen, setCartOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
 
   return (
     <>
+      <Drawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
       <header className={styles.header}>
         <div className={styles.logowrapper}>
           <Link href="/">
@@ -63,7 +63,11 @@ const Header = (): ReactNode => {
         </div>
         <div className={styles.headericons}>
           <div className={styles.iconwrapper}>
-            <Button variant="ghost" size="icon">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setCartOpen((old) => !old)}
+            >
               <ShoppingCart size={20} />
             </Button>
             {items?.length !== undefined && (
@@ -76,7 +80,6 @@ const Header = (): ReactNode => {
           </Button>
         </div>
       </header>
-      {/* <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} /> */}
     </>
   );
 };
