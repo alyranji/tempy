@@ -32,6 +32,17 @@ type Comment = {
   replies?: Comment[];
 };
 
+const categoryDict = [
+  { value: "blog", label: "وبلاگ" },
+  { value: "news", label: "خبری" },
+  { value: "corp", label: "شرکتی" },
+  { value: "edu", label: "آموزشی" },
+  { value: "store", label: "فروشگاهی" },
+  { value: "portfolio", label: "نمونه کار" },
+  { value: "marketing", label: "دیجیتال مارکتینگ" },
+  { value: "startup", label: "استارتاپی" },
+];
+
 const Page = ({ params }: TemplatePageProps): ReactNode => {
   const { slug } = React.use(params);
   const [activeTab, setActiveTab] = useState<
@@ -194,7 +205,9 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
             <div className={styles.categories}>
               {template.categories.map((cat, idx) => (
                 <span key={idx} className={styles.category}>
-                  {cat}
+                  {categoryDict
+                    .filter((x) => x.value === cat)
+                    .map((x) => x.label)}
                 </span>
               ))}
             </div>
