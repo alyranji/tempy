@@ -10,7 +10,8 @@
 
 /* Hero Section */
 .hero {
-    border-radius: 0.75rem;
+    background: var(--gradient-hero);
+    border-radius: var(--radius);
     padding: 2rem;
     margin-bottom: 3rem;
 
@@ -31,26 +32,27 @@
 
 .heroImage {
     position: relative;
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     overflow: hidden;
-    box-shadow: 0 2px 8px hsla(240, 10%, 10%, 0.06);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
 
     &:hover {
-        box-shadow: 0 8px 24px hsla(240, 10%, 10%, 0.12);
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-4px);
 
         .demoButton {
             opacity: 1;
+            transform: translateY(0);
         }
     }
 
     img {
+        width: 100%;
+        height: auto;
+        display: block;
         aspect-ratio: 16 / 10;
         object-fit: cover;
-        width: 100%;
-        object-position: top;
-        height: 100%;
-        display: block;
     }
 }
 
@@ -59,15 +61,19 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, calc(-50% + 10px));
-    color: hsl(0 0% 100%);
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
     padding: 1rem 2rem;
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     text-decoration: none;
     font-weight: 600;
     opacity: 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 12px hsla(262, 83%, 58%, 0.4);
 
-
+    &:hover {
+        background: hsl(262 83% 52%);
+    }
 }
 
 .heroInfo {
@@ -83,8 +89,8 @@
 }
 
 .category {
-    background: var(--cc-baby-blue);
-    color: var(--cc-azure-blue);
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
     padding: 0.375rem 1rem;
     border-radius: 2rem;
     font-size: 0.875rem;
@@ -94,7 +100,7 @@
 .title {
     font-size: 2rem;
     font-weight: 700;
-    color: hsl(240 10% 10%);
+    color: hsl(var(--foreground));
     margin: 0;
 
     @media (min-width: 768px) {
@@ -105,7 +111,6 @@
 .meta {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 2rem;
     flex-wrap: wrap;
 }
@@ -127,12 +132,12 @@
 }
 
 .starEmpty {
-    color: hsl(240 6% 90%);
+    color: hsl(var(--border));
 }
 
 .score {
     font-weight: 600;
-    color: hsl(240 10% 10%);
+    color: hsl(var(--foreground));
 }
 
 .sales {
@@ -140,7 +145,7 @@
     align-items: center;
     gap: 0.5rem;
     font-weight: 500;
-    color: hsl(240 5% 45%);
+    color: hsl(var(--muted-foreground));
 }
 
 .salesIcon {
@@ -150,7 +155,7 @@
 .description {
     font-size: 1.125rem;
     line-height: 1.75;
-    color: hsl(240 5% 45%);
+    color: hsl(var(--muted-foreground));
     margin: 0;
 }
 
@@ -161,17 +166,16 @@
 }
 
 .tag {
-    background: #f2f2f2;
-    color: hsl(240 10% 10%);
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
     padding: 0.5rem 1rem;
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     font-size: 0.875rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: alias;
+    transition: var(--transition-smooth);
 
     &:hover {
-        background: var(--cc-azure-blue);
-        color: hsl(0 0% 100%);
+        background: hsl(var(--accent));
+        color: hsl(var(--accent-foreground));
     }
 }
 
@@ -181,7 +185,7 @@
     gap: 1rem;
     margin-top: auto;
     padding-top: 1.5rem;
-    border-top: 2px solid hsl(240 6% 90%);
+    border-top: 2px solid hsl(var(--border));
 
     @media (min-width: 768px) {
         flex-direction: row;
@@ -198,21 +202,21 @@
 
 .priceLabel {
     font-size: 1rem;
-    color: hsl(240 5% 45%);
+    color: hsl(var(--muted-foreground));
 }
 
 .price {
     font-size: 2rem;
     font-weight: 700;
-    color: var(--cc-azure-blue)
+    color: hsl(var(--primary));
 }
 
 .addToCart {
-    background: linear-gradient(135deg, hsl(262 83% 58%), hsl(210 100% 50%));
+    background: var(--gradient-primary);
     color: white;
     border: none;
     padding: 1rem 2rem;
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     font-size: 1.125rem;
     font-weight: 600;
     cursor: pointer;
@@ -220,7 +224,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-smooth);
     box-shadow: 0 4px 12px hsla(262, 83%, 58%, 0.3);
 
     &:hover {
@@ -239,20 +243,19 @@
 
 /* Details Section */
 .details {
-    background: hsl(0 0% 100%);
-    border-radius: 0.75rem;
+    background: hsl(var(--card));
+    border-radius: var(--radius);
     padding: 2rem;
     margin-bottom: 3rem;
-    box-shadow: 0 2px 8px hsla(240, 10%, 10%, 0.06);
+    box-shadow: var(--shadow-card);
 }
 
 .tabs {
     display: flex;
     gap: 0.5rem;
-    border-bottom: 2px solid hsl(240 6% 90%);
+    border-bottom: 2px solid hsl(var(--border));
     margin-bottom: 2rem;
-    overflow: scroll;
-    scrollbar-width: none;
+    overflow-x: auto;
 }
 
 .tab {
@@ -261,19 +264,19 @@
     padding: 1rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;
-    color: hsl(240 5% 45%);
+    color: hsl(var(--muted-foreground));
     cursor: pointer;
     position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-smooth);
     white-space: nowrap;
 
     &:hover {
-        color: hsl(240 10% 10%);
+        color: hsl(var(--foreground));
     }
 }
 
 .tabActive {
-    color: var(--cc-azure-blue);
+    color: hsl(var(--primary));
 
     &::after {
         content: '';
@@ -282,7 +285,7 @@
         left: 0;
         right: 0;
         height: 2px;
-        background: var(--cc-azure-blue);
+        background: hsl(var(--primary));
     }
 }
 
@@ -293,14 +296,7 @@
 .detailsText {
     font-size: 1.1rem;
     line-height: 1.9;
-    /* این مقدار rgba(255, 255, 255, 0.9) در حالت لایت احتمالاً باید تغییر کند
-       در حالت لایت، رنگ foreground معمولاً تیره است. از رنگ foreground استفاده می‌کنم:
-       color: hsl(240 10% 10%)
-       اما با توجه به اینکه این رنگ برای text است و در حالت dark شفافیت 0.9 دارد،
-       برای حفظ شفافیت و رنگ اصلی text، از رنگ muted-foreground استفاده میکنم
-       که معمولاً برای متن‌های کم اهمیت تر استفاده می‌شود.
-    */
-    color: hsl(240 5% 45%);
+    color: rgba(255, 255, 255, 0.9);
     padding: 1rem 0;
 }
 
@@ -321,12 +317,12 @@
     align-items: flex-start;
     gap: 0.75rem;
     padding: 1rem;
-    background: hsl(240 5% 96% / 0.3);
-    border-radius: 0.75rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: hsl(var(--secondary) / 0.3);
+    border-radius: var(--radius);
+    transition: var(--transition-smooth);
 
     &:hover {
-        background: hsl(240 5% 96%);
+        background: hsl(var(--secondary));
         transform: translateX(-4px);
     }
 }
@@ -339,14 +335,14 @@
 }
 
 .bullet {
-    color: var(--cc-azure-blue);
+    color: hsl(var(--primary));
     font-weight: 700;
     font-size: 1.5rem;
     flex-shrink: 0;
 }
 
 .plus {
-    color: hsl(210 100% 50%);
+    color: hsl(var(--accent));
     font-weight: 700;
     font-size: 1.25rem;
     flex-shrink: 0;
@@ -361,7 +357,7 @@
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 2rem;
-    color: hsl(240 10% 10%);
+    color: hsl(var(--foreground));
     text-align: center;
 }
 
@@ -371,14 +367,14 @@
 }
 
 .faqItem {
-    background: hsl(0 0% 100%);
-    border-radius: 0.75rem;
+    background: hsl(var(--card));
+    border-radius: var(--radius);
     overflow: hidden;
-    box-shadow: 0 2px 8px hsla(240, 10%, 10%, 0.06);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
 
     &:hover {
-        box-shadow: 0 8px 24px hsla(240, 10%, 10%, 0.12);
+        box-shadow: var(--shadow-hover);
     }
 }
 
@@ -390,22 +386,22 @@
     text-align: right;
     font-size: 1.125rem;
     font-weight: 600;
-    color: hsl(240 10% 10%);
+    color: hsl(var(--foreground));
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-smooth);
 
     &:hover {
-        background: hsl(240 5% 96% / 0.5);
+        background: hsl(var(--secondary) / 0.5);
     }
 }
 
 .faqIcon {
     font-size: 1.5rem;
-    color: var(--cc-azure-blue);
+    color: hsl(var(--primary));
     transition: transform 0.3s ease;
     transform: rotate(180deg);
 }
@@ -416,7 +412,7 @@
 
 .faqAnswer {
     padding: 0 1.5rem 1.5rem;
-    color: hsl(240 5% 45%);
+    color: hsl(var(--muted-foreground));
     line-height: 1.75;
     animation: slideDown 0.3s ease-out;
 }
@@ -427,14 +423,15 @@
 }
 
 .customCtaContent {
-    background: var(--gradient-brand-blue);
-    border-radius: 0.75rem;
+    background: var(--gradient-primary);
+    border-radius: var(--radius);
     padding: 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
     text-align: center;
+    box-shadow: 0 8px 24px hsla(262, 83%, 58%, 0.3);
 
     @media (min-width: 768px) {
         flex-direction: row;
@@ -466,14 +463,14 @@
 
 .customCtaButton {
     background: white;
-    color: var(--cc-azure-blue);
+    color: hsl(var(--primary));
     border: none;
     padding: 1rem 2rem;
-    border-radius: 0.75rem;
+    border-radius: var(--radius);
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-smooth);
     white-space: nowrap;
 
     &:hover {
@@ -493,10 +490,10 @@
 }
 
 .comment {
-    background: hsl(0 0% 100%);
-    border-radius: 0.75rem;
+    background: hsl(var(--card));
+    border-radius: var(--radius);
     padding: 1.5rem;
-    box-shadow: 0 2px 8px hsla(240, 10%, 10%, 0.06);
+    box-shadow: var(--shadow-card);
 }
 
 .commentHeader {
@@ -513,7 +510,7 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--cc-azure-blue), hsl(210 100% 50%));
+    background: var(--gradient-primary);
     color: white;
     display: flex;
     align-items: center;
@@ -523,19 +520,19 @@
 }
 
 .avatarSupport {
-    background: hsl(210 100% 50%);
+    background: hsl(var(--accent));
 }
 
 .authorName {
     font-weight: 600;
-    color: hsl(240 10% 10%);
+    color: hsl(var(--foreground));
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
 .supportBadge {
-    background: hsl(210 100% 50%);
+    background: hsl(var(--accent));
     color: white;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
@@ -544,12 +541,12 @@
 
 .commentDate {
     font-size: 0.875rem;
-    color: hsl(240 5% 45%);
+    color: hsl(var(--muted-foreground));
 }
 
 .commentContent {
     line-height: 1.75;
-    color: hsl(240 10% 10%);
+    color: hsl(var(--foreground));
 }
 
 .replies {
@@ -560,8 +557,8 @@
 }
 
 .reply {
-    background: hsl(240 5% 96% / 0.5);
-    border-radius: 0.75rem;
+    background: hsl(var(--secondary) / 0.5);
+    border-radius: var(--radius);
     padding: 1rem;
 }
 
@@ -584,16 +581,16 @@
 }
 
 .similarCard {
-    background: hsl(0 0% 100%);
-    border-radius: 0.75rem;
+    background: hsl(var(--card));
+    border-radius: var(--radius);
     overflow: hidden;
-    box-shadow: 0 2px 8px hsla(240, 10%, 10%, 0.06);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
     cursor: pointer;
 
     &:hover {
         transform: translateY(-4px);
-        box-shadow: 0 8px 24px hsla(240, 10%, 10%, 0.12);
+        box-shadow: var(--shadow-hover);
 
         .similarImage img {
             transform: scale(1.05);
@@ -620,7 +617,7 @@
 .similarTitle {
     font-size: 1rem;
     font-weight: 600;
-    color: hsl(240 10% 10%);
+    color: hsl(var(--foreground));
     margin: 0 0 0.75rem;
 }
 
@@ -632,7 +629,7 @@
 
 .similarPrice {
     font-weight: 600;
-    color: var(--cc-azure-blue);
+    color: hsl(var(--primary));
     font-size: 0.875rem;
 }
 

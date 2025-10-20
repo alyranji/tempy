@@ -1,22 +1,28 @@
-"use client";
-
-import { ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import React from "react";
 
-import { Call, ShoppingBag, Star1 } from "iconsax-reactjs";
-import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-
-import { Button } from "@/components/button/button";
-
-import { useCart } from "@/providers/CartProvider";
-
-import { type Template } from "@/types/templates";
 
 import { filterTemplates } from "@/utils/filter-templates";
 
-import styles from "./page.module.css";
+import styles from "./TemplatePDP.module.css";
+
+export type Template = {
+  title: string;
+  image: string;
+  description?: string | null;
+  demo_url: string | null;
+  price: number;
+  created_at: Date;
+  updated_at: Date;
+  score: 1 | 2 | 3 | 4 | 5 | null;
+  sellCount: number;
+  categories: string[];
+  tags: string[];
+  features: string[];
+  addons: string[];
+  requirements: string[];
+};
 
 interface TemplatePageProps {
   params: Promise<{
@@ -32,7 +38,7 @@ type Comment = {
   replies?: Comment[];
 };
 
-const Page = ({ params }: TemplatePageProps): ReactNode => {
+const TemplatePDP = ({ params }: TemplatePageProps): ReactNode => {
   const { slug } = React.use(params);
   const [activeTab, setActiveTab] = useState<
     "details" | "features" | "requirements" | "addons"
@@ -41,8 +47,6 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
 
   const [template, setTemplate] = useState<Template | undefined>();
   const [loading, setLoading] = useState(true);
-
-  const { addItem } = useCart();
 
   if (!slug) {
     notFound();
@@ -144,23 +148,22 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
     },
   ];
 
-  const renderStars = (score: number): ReactNode => {
-    const scoreArray = Array.apply("", Array(score));
-    const remainStars = 5 - score;
-    const remainArray = Array.apply("", Array(remainStars));
+  const renderStars = (score: number) => {
     return (
       <div className={styles.stars}>
-        {scoreArray.map((_, index) => (
-          <Star1 key={index} color="#ffa945" variant="Bold" />
-        ))}
-        {remainArray.map((_, index) => (
-          <Star1 key={index} color="#ffa945" />
+        {[1, 2, 3, 4, 5].map((star) => (
+          <span
+            key={star}
+            className={star <= score ? styles.starFilled : styles.starEmpty}
+          >
+            ★
+          </span>
         ))}
       </div>
     );
   };
 
-  const formatPrice = (price: number): ReactNode => {
+  const formatPrice = (price: number) => {
     return new Intl.NumberFormat("fa-IR").format(price) + " تومان";
   };
 
@@ -170,23 +173,16 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <div className={styles.heroImage}>
-            {template?.image && (
-              <Image
-                src={template?.image}
-                alt={template.title}
-                width={500}
-                height={1000}
-              />
-            )}
+            <img src={template.image} alt={template.title} />
             {template.demo_url && (
-              <Link
+              <a
                 href={template.demo_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.demoButton}
               >
-                <Button>مشاهده دمو زنده</Button>
-              </Link>
+                مشاهده دموی زنده
+              </a>
             )}
           </div>
 
@@ -205,13 +201,11 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
               {template.score && (
                 <div className={styles.rating}>
                   {renderStars(template.score)}
-                  <span className={styles.score}>{template.score} از 5</span>
+                  <span className={styles.score}>{template.score}/5</span>
                 </div>
               )}
               <div className={styles.sales}>
-                <span className={styles.salesIcon}>
-                  <ShoppingBag />
-                </span>
+                <span className={styles.salesIcon}>🔥</span>
                 <span>{template.sellCount} فروش</span>
               </div>
             </div>
@@ -233,15 +227,10 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
                   {formatPrice(template.price)}
                 </div>
               </div>
-
-              <Button
-                variant="primary"
-                size="md"
-                onClick={() => addItem(template)}
-                icon={<ShoppingBag />}
-              >
+              <button className={styles.addToCart}>
+                <span className={styles.cartIcon}>🛒</span>
                 افزودن به سبد خرید
-              </Button>
+              </button>
             </div>
           </div>
         </div>
@@ -350,9 +339,7 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
               تیم ما آماده است تا وبسایت اختصاصی شما را طراحی و پیاده‌سازی کند
             </p>
           </div>
-          <Button variant="light" size="md" icon={<Call />}>
-            تماس با ما
-          </Button>
+          <button className={styles.customCtaButton}>تماس با ما</button>
         </div>
       </section>
 
@@ -434,4 +421,4 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
   );
 };
 
-export default Page;
+export default TemplatePDP;
