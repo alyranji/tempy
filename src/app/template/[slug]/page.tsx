@@ -1,9 +1,15 @@
 "use client";
 
-import { ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import React from "react";
 
-import { Call, ShoppingBag, Star1 } from "iconsax-reactjs";
+import {
+  ArchiveTick,
+  Call,
+  Refresh,
+  ShoppingBag,
+  Star1,
+} from "iconsax-reactjs";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -52,8 +58,9 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
 
   const [template, setTemplate] = useState<Template | undefined>();
   const [loading, setLoading] = useState(true);
+  const [isInCart, setisInCart] = useState(false);
 
-  const { addItem } = useCart();
+  const { addItem, items, removeItem } = useCart();
 
   if (!slug) {
     notFound();
@@ -74,6 +81,14 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
 
     fetchTemplates();
   }, [slug]);
+
+  useEffect(() => {
+    if (items?.filter((item) => item.id === template?.id).length) {
+      setisInCart(true);
+    } else {
+      setisInCart(false);
+    }
+  }, [items, template?.id]);
 
   if (!template)
     return <div className={styles.loading}>در حال بارگذاری...</div>;
@@ -189,6 +204,7 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
                 height={1000}
               />
             )}
+            <div className={styles.overlay}></div>
             {template.demo_url && (
               <Link
                 href={template.demo_url}
@@ -223,9 +239,19 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
               )}
               <div className={styles.sales}>
                 <span className={styles.salesIcon}>
-                  <ShoppingBag />
+                  <svg
+                    stroke="currentColor"
+                    fill="#FFC107"
+                    strokeWidth="0"
+                    viewBox="0 0 16 16"
+                    height="23"
+                    width="23"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"></path>
+                  </svg>
                 </span>
-                <span>{template.sellCount} فروش</span>
+                <span>{template.sellCount} فروش </span>
               </div>
             </div>
 
@@ -247,14 +273,33 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
                 </div>
               </div>
 
-              <Button
-                variant="primary"
-                size="md"
-                onClick={() => addItem(template)}
-                icon={<ShoppingBag />}
-              >
-                افزودن به سبد خرید
-              </Button>
+              {isInCart ? (
+                <div className={styles.restoreBtn}>
+                  <Button
+                    variant="primary"
+                    size="md"
+                    disabled
+                    onClick={() => addItem(template)}
+                    icon={<ArchiveTick />}
+                  >
+                    محصول به در سبد شماست!
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => removeItem(template)}
+                    icon={<Refresh />}
+                  ></Button>
+                </div>
+              ) : (
+                <Button
+                  variant="primary"
+                  size="md"
+                  onClick={() => addItem(template)}
+                  icon={<ShoppingBag />}
+                >
+                  افزودن به سبد خرید
+                </Button>
+              )}
             </div>
           </div>
         </div>
