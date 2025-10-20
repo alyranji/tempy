@@ -20,15 +20,8 @@ type DrawerProps = PropsWithChildren & {
 };
 
 export default function Drawer({ isOpen, onClose }: DrawerProps): ReactNode {
-  const {
-    items,
-    addItem,
-    clearCart,
-    removeItem,
-    totalItems,
-    totalPrice,
-    updateQuantity,
-  } = useCart();
+  const { items, removeItem, totalItems, totalPrice, updateQuantity } =
+    useCart();
 
   return (
     <>
