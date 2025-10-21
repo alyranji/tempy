@@ -15,6 +15,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Button } from "@/components/button/button";
+import TemplateCard from "@/components/template card/template-card";
 
 import { useCart } from "@/providers/CartProvider";
 
@@ -59,6 +60,7 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
   const [template, setTemplate] = useState<Template | undefined>();
   const [loading, setLoading] = useState(true);
   const [isInCart, setisInCart] = useState(false);
+  const [similarTemplates, setSimilarTemplates] = useState<Template[]>();
 
   const { addItem, items, removeItem } = useCart();
 
@@ -71,7 +73,20 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
       try {
         const data = await filterTemplates({});
         const template = data.find((item) => item.slug === slug);
+
+        if (!template) {
+          console.warn(`Template with slug "${slug}" not found.`);
+          setTemplate(undefined);
+          setSimilarTemplates([]);
+          return;
+        }
+
         setTemplate(template);
+
+        const similar = await filterTemplates({
+          categories: template.categories,
+        });
+        setSimilarTemplates(similar);
       } catch (err) {
         console.error(err);
       } finally {
@@ -139,36 +154,36 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
     },
   ];
 
-  const similarTemplates = [
-    {
-      id: 1,
-      title: "قالب فروشگاهی پرو",
-      image: "/placeholder.svg",
-      price: 3200000,
-      score: 4,
-    },
-    {
-      id: 2,
-      title: "قالب چند فروشندگی",
-      image: "/placeholder.svg",
-      price: 4500000,
-      score: 5,
-    },
-    {
-      id: 3,
-      title: "قالب فروشگاه مینیمال",
-      image: "/placeholder.svg",
-      price: 1800000,
-      score: 4,
-    },
-    {
-      id: 4,
-      title: "قالب فروشگاه لوکس",
-      image: "/placeholder.svg",
-      price: 2900000,
-      score: 5,
-    },
-  ];
+  // const similarTemplates = [
+  //   {
+  //     id: 1,
+  //     title: "قالب فروشگاهی پرو",
+  //     image: "/placeholder.svg",
+  //     price: 3200000,
+  //     score: 4,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "قالب چند فروشندگی",
+  //     image: "/placeholder.svg",
+  //     price: 4500000,
+  //     score: 5,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "قالب فروشگاه مینیمال",
+  //     image: "/placeholder.svg",
+  //     price: 1800000,
+  //     score: 4,
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "قالب فروشگاه لوکس",
+  //     image: "/placeholder.svg",
+  //     price: 2900000,
+  //     score: 5,
+  //   },
+  // ];
 
   const renderStars = (score: number): ReactNode => {
     const scoreArray = Array.apply("", Array(score));
@@ -470,20 +485,9 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
       <section className={styles.similar}>
         <h2 className={styles.sectionTitle}>قالب‌های مشابه</h2>
         <div className={styles.similarGrid}>
-          {similarTemplates.map((item) => (
+          {similarTemplates?.map((item) => (
             <div key={item.id} className={styles.similarCard}>
-              <div className={styles.similarImage}>
-                <img src={item.image} alt={item.title} />
-              </div>
-              <div className={styles.similarInfo}>
-                <h3 className={styles.similarTitle}>{item.title}</h3>
-                <div className={styles.similarMeta}>
-                  {renderStars(item.score)}
-                  <div className={styles.similarPrice}>
-                    {formatPrice(item.price)}
-                  </div>
-                </div>
-              </div>
+              <TemplateCard template={item} />
             </div>
           ))}
         </div>
