@@ -1,0 +1,326 @@
+/* تعریف متغیرهای رنگی (فرضی) - بر اساس استاندارد Tailwind */
+:root {
+    --color-background: #ffffff;
+    --color-secondary: #f3f4f6;
+    /* secondary */
+    --color-border: #e5e7eb;
+    /* border */
+    --color-primary: #007bff;
+    /* primary */
+    --color-primary-light: #e0f2ff;
+    /* primary/10 */
+    --color-muted-foreground: #6c757d;
+    /* muted-foreground */
+    --color-card: #ffffff;
+    /* bg-card */
+    --color-destructive: #dc3545;
+    /* destructive */
+
+    --spacing-container: 1.5rem;
+    /* px-4 */
+    --spacing-section: 3rem;
+    /* py-12 */
+}
+
+.pageWrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Placeholders for external components */
+.headerPlaceholder,
+.footerPlaceholder {
+    height: 4rem;
+    /* شبیه‌سازی ارتفاع header/footer */
+    background-color: #343a40;
+    /* صرفاً برای مشاهده */
+    color: white;
+    text-align: center;
+    line-height: 4rem;
+}
+
+/* --- Hero Section (Section) --- */
+.heroSection {
+    border-bottom: 1px solid var(--color-border);
+    /* bg-gradient-to-b from-background to-secondary/20 */
+    background: linear-gradient(to bottom, var(--color-background), color-mix(in srgb, var(--color-secondary) 20%, transparent));
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+}
+
+.container {
+    max-width: 1400px;
+    /* mx-auto */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-container);
+    padding-right: var(--spacing-container);
+    text-align: center;
+}
+
+.heroTitle {
+    font-size: 1.875rem;
+    /* text-3xl */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    /* mb-4 */
+
+    @media (min-width: 768px) {
+        /* md:text-5xl */
+        font-size: 3rem;
+    }
+}
+
+.heroSubtitle {
+    font-size: 1.125rem;
+    /* text-lg */
+    color: var(--color-muted-foreground);
+    max-width: 42rem;
+    /* max-w-2xl */
+    margin-left: auto;
+    /* mx-auto */
+    margin-right: auto;
+    line-height: 1.75;
+}
+
+/* --- Main Content Area --- */
+.contentContainer {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+    flex: 1;
+    /* flex-1 */
+
+    /* Nested container equivalent */
+    .contentGrid {
+        max-width: 68rem;
+        /* max-w-5xl */
+        margin-left: auto;
+        /* mx-auto */
+        margin-right: auto;
+        padding-left: var(--spacing-container);
+        padding-right: var(--spacing-container);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        /* gap-8 */
+
+        @media (min-width: 768px) {
+            /* md:grid-cols-2 */
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+/* --- Shared Card Style (bg-card border border-border rounded-lg) --- */
+.card {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    /* rounded-lg */
+    padding: 1.5rem;
+    /* p-6 */
+}
+
+/* --- Form Column (Left/Right depending on RTL) --- */
+.formColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* space-y-6 */
+}
+
+.formCard {
+
+    .formTitle {
+        font-size: 1.25rem;
+        /* text-xl */
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        /* mb-6 */
+        text-align: right;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* space-y-4 */
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    /* space-y-2 */
+    text-align: right;
+}
+
+.label {
+    font-size: 0.875rem;
+    /* text-sm */
+    font-weight: 500;
+}
+
+.input,
+.textarea {
+    /* شبیه‌سازی Input/Textarea کامپوننت Shadcn/UI */
+    display: flex;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    border-radius: 0.375rem;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-background);
+    transition: border-color 150ms, box-shadow 150ms;
+    text-align: right;
+    /* text-right */
+
+    &:focus {
+        border-color: var(--color-primary);
+        outline: none;
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 25%, transparent);
+    }
+}
+
+.textarea {
+    resize: vertical;
+}
+
+.button {
+    /* شبیه‌سازی Button */
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 150ms;
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+
+    &:hover {
+        background-color: color-mix(in srgb, var(--color-primary) 90%, transparent);
+    }
+}
+
+.fullWidthButton {
+    width: 100%;
+    /* w-full */
+}
+
+/* --- Info Column (Right/Left depending on RTL) --- */
+.infoColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* space-y-6 */
+}
+
+.infoCard {
+    /* p-6 space-y-6 */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .infoTitle {
+        font-size: 1.25rem;
+        /* text-xl */
+        font-weight: 700;
+        text-align: right;
+    }
+}
+
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* space-y-4 */
+}
+
+.infoItem {
+    display: flex;
+    align-items: flex-start;
+    /* items-start */
+    gap: 1rem;
+    /* gap-4 */
+    justify-content: flex-end;
+    /* justify-end (RTL) */
+}
+
+.infoTextWrapper {
+    text-align: right;
+
+    .infoLabel {
+        font-weight: 600;
+        /* font-semibold */
+        margin-bottom: 0.25rem;
+        /* mb-1 */
+    }
+
+    .infoValue {
+        font-size: 0.875rem;
+        /* text-sm */
+        color: var(--color-muted-foreground);
+    }
+}
+
+.iconWrapper {
+    width: 2.5rem;
+    /* w-10 */
+    height: 2.5rem;
+    /* h-10 */
+    border-radius: 0.5rem;
+    /* rounded-lg */
+    background-color: var(--color-primary-light);
+    /* bg-primary/10 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    &>svg {
+        height: 1.25rem;
+        /* h-5 */
+        width: 1.25rem;
+        /* w-5 */
+        color: var(--color-primary);
+    }
+}
+
+/* --- Hours Card --- */
+.hoursCard {
+
+    .hoursTitle {
+        font-weight: 700;
+        margin-bottom: 1rem;
+        /* mb-4 */
+        text-align: right;
+    }
+}
+
+.hoursList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    /* space-y-2 */
+    font-size: 0.875rem;
+    /* text-sm */
+    text-align: right;
+}
+
+.hoursRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.hoursValue {
+    color: var(--color-muted-foreground);
+}
+
+.holidayValue {
+    color: var(--color-destructive);
+    /* text-destructive */
+}

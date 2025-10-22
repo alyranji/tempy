@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-
-
-
 :root {
   --cc-sky-blue: #4aaaff;
   --cc-azure-blue: #0077e0;
@@ -33,10 +30,12 @@
   --cc-white-soft: hsla(0, 0%, 100%, 0.8);
   --cc-dark-overlay: rgba(39, 39, 39, 0.8);
 
-  --gradient-cosmic-night: radial-gradient(circle farthest-corner at 10% 20%,
-      #0b0b0b 0%,
-      #091b49 50.6%,
-      #0b0b0b 100.2%);
+  --gradient-cosmic-night: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    #0b0b0b 0%,
+    #091b49 50.6%,
+    #0b0b0b 100.2%
+  );
 
   --gradient-brand-blue: linear-gradient(141deg, #4aaaff, #0077e0);
   --gradient-brand-blue-reverse: linear-gradient(141deg, #0077e0, #4aaaff);
@@ -53,5 +52,4 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
 }

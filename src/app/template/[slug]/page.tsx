@@ -6,6 +6,7 @@ import React from "react";
 import {
   ArchiveTick,
   Call,
+  Eye,
   Refresh,
   ShoppingBag,
   Star1,
@@ -220,16 +221,6 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
               />
             )}
             <div className={styles.overlay}></div>
-            {template.demo_url && (
-              <Link
-                href={template.demo_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.demoButton}
-              >
-                <Button>مشاهده دمو زنده</Button>
-              </Link>
-            )}
           </div>
 
           <div className={styles.heroInfo}>
@@ -288,33 +279,43 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
                 </div>
               </div>
 
-              {isInCart ? (
-                <div className={styles.restoreBtn}>
+              <div className={styles.productBtns}>
+                {isInCart ? (
+                  <div className={styles.restoreBtn}>
+                    <Button
+                      variant="primary"
+                      size="md"
+                      disabled
+                      onClick={() => addItem(template)}
+                      icon={<ArchiveTick />}
+                    >
+                      محصول به در سبد شماست!
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      onClick={() => removeItem(template)}
+                      icon={<Refresh />}
+                    ></Button>
+                  </div>
+                ) : (
                   <Button
                     variant="primary"
                     size="md"
-                    disabled
                     onClick={() => addItem(template)}
-                    icon={<ArchiveTick />}
+                    icon={<ShoppingBag />}
                   >
-                    محصول به در سبد شماست!
+                    افزودن به سبد خرید
                   </Button>
-                  <Button
-                    variant="ghost"
-                    onClick={() => removeItem(template)}
-                    icon={<Refresh />}
-                  ></Button>
-                </div>
-              ) : (
+                )}
                 <Button
-                  variant="primary"
+                  variant="outline"
                   size="md"
                   onClick={() => addItem(template)}
-                  icon={<ShoppingBag />}
+                  icon={<Eye />}
                 >
-                  افزودن به سبد خرید
+                  مشاهده دمو
                 </Button>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -430,7 +431,7 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
       </section>
 
       {/* Comments Section */}
-      <section className={styles.comments}>
+      {/* <section className={styles.comments}>
         <h2 className={styles.sectionTitle}>نظرات کاربران</h2>
         <div className={styles.commentsList}>
           {comments.map((comment) => (
@@ -479,7 +480,7 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* Similar Templates */}
       <section className={styles.similar}>

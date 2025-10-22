@@ -44,19 +44,19 @@ const Header = (): ReactNode => {
               </li>
               <li className={styles.listItem}>
                 <ShoppingCart size={16} />
-                <Link href="#">فروشگاه</Link>
+                <Link href="/shop">فروشگاه</Link>
               </li>
               <li className={styles.listItem}>
                 <Profile2User size={16} />
-                <Link href="#">درباره ما</Link>
+                <Link href="/about-us">درباره ما</Link>
               </li>
               <li className={styles.listItem}>
                 <Call size={16} />
-                <Link href="#">تماس با ما</Link>
+                <Link href="/contact">تماس با ما</Link>
               </li>
               <li className={styles.listItem}>
                 <ReceiptEdit size={16} />
-                <Link href="#">وبلاگ</Link>
+                <Link href="/blog">وبلاگ</Link>
               </li>
             </ul>
           </nav>

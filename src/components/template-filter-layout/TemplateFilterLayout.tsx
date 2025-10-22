@@ -12,7 +12,7 @@ import {
   LanguageSquare,
   WalletMoney,
 } from "iconsax-reactjs";
-import { ArrowDown2, ArrowUp2, Sort } from "iconsax-reactjs";
+import { ArrowDown2, Sort } from "iconsax-reactjs";
 
 import { Template } from "@/types/templates";
 
@@ -22,18 +22,23 @@ import CardGrid from "../card grid/CardGrid";
 
 import styles from "./TemplateFilterLayout.module.css";
 
-function TemplateFilterLayout(): ReactNode {
-  const [loading, setLoading] = useState(true);
+interface TemplateFilterLayoutProps {
+  initialCategory?: string;
+}
+
+function TemplateFilterLayout({
+  initialCategory,
+}: TemplateFilterLayoutProps): ReactNode {
   const [templates, setTemplates] = useState<Template[]>();
   const [rtl, setRtl] = useState<boolean | undefined>();
-  const [category, setCategory] = useState<string>();
+  const [category, setCategory] = useState<string | undefined>(initialCategory);
   const [sort, setSort] = useState<
     "price_asc" | "price_desc" | "newest" | "popular"
   >("newest");
   const [sellCount, setSellCount] = useState<number | undefined>();
   const [minPrice, setMinPrice] = useState<number | undefined>(2500000);
   const [maxPrice, setMaxPrice] = useState<number | undefined>(10000000);
-  const [reviewCount, setReviewCount] = useState<number>();
+  const [reviewCount] = useState<number | undefined>();
 
   useEffect(() => {
     async function fetchTemplates(): Promise<void> {
@@ -49,8 +54,6 @@ function TemplateFilterLayout(): ReactNode {
         setTemplates(data);
       } catch (err) {
         console.error(err);
-      } finally {
-        setLoading(false);
       }
     }
 

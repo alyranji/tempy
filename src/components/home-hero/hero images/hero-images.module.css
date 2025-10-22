@@ -1,9 +1,9 @@
 .wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 
-    .item {
-        inline-size: 15%;
-    }
+  .item {
+    inline-size: 15%;
+  }
 }
