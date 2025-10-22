@@ -1,59 +1,54 @@
 .header {
-    padding-inline: calc(max(100% - 1400px, 16px) / 2);
-    padding-block: 20px;
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    position: sticky;
-    top: 0;
-    background-color: var(--cc-pure-white);
-    z-index: 99;
+  padding-inline: calc(max(100% - 1400px, 16px) / 2);
+  padding-block: 20px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  position: sticky;
+  top: 0;
+  background-color: var(--cc-pure-white);
+  z-index: 2;
 
-
-
-
-    .navwrapper {
-        ul {
-            display: flex;
-            gap: 24px;
-        }
-
-        .listItem {
-            display: flex;
-            align-items: center;
-            color: var(--cc-dim-gray)
-        }
+  .navwrapper {
+    ul {
+      display: flex;
+      gap: 24px;
     }
 
     .listItem {
-        display: flex;
-        gap: 4px;
+      display: flex;
+      align-items: center;
+      color: var(--cc-dim-gray);
     }
+  }
 
-    .headericons {
+  .listItem {
+    display: flex;
+    gap: 4px;
+  }
+
+  .headericons {
+    display: flex;
+    margin-inline-start: auto;
+    gap: 8px;
+
+    .iconwrapper {
+      position: relative;
+
+      .cartcount {
+        background-color: var(--cc-azure-blue);
+        color: white;
+        position: absolute;
+        top: 5px;
+        border-radius: 999rem;
+        width: 1rem;
+        height: 1rem;
         display: flex;
-        margin-inline-start: auto;
-        gap: 8px;
-
-        .iconwrapper {
-
-            position: relative;
-
-            .cartcount {
-                background-color: black;
-                color: white;
-                position: absolute;
-                top: 5px;
-                border-radius: 999rem;
-                width: 1rem;
-                height: 1rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 10px;
-                aspect-ratio: 1;
-            }
-
-        }
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        aspect-ratio: 1;
+      }
     }
+  }
 }

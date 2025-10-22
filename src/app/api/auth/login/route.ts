@@ -1,48 +1,55 @@
-import { NextRequest, NextResponse } from "next/server";
+import { success } from "zod";
+
+import { GetDBParams } from "@/shared/common";
+import mysql from "mysql2/promise";
+import { NextResponse } from "next/server";
 
 import { loginSchema } from "@/schemas/login.schema";
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export async function POST(req: Request): Promise<
+  | NextResponse<{
+      error: string;
+      details: unknown;
+    }>
+  | NextResponse<string>
+  | NextResponse<any>
+> {
   try {
-    const body = await req.json();
-    const parsed = loginSchema.safeParse(body);
+    const data = await req.json();
+
+    const parsed = loginSchema.safeParse(data);
 
     if (!parsed.success) {
       return NextResponse.json(
-        { success: false, errors: parsed.error.flatten().fieldErrors },
+        { error: "invalid data", details: parsed.error.cause },
         { status: 400 },
       );
     }
 
     const { username, password } = parsed.data;
+    const connection = await mysql.createConnection(GetDBParams());
 
-    const fakeUser = {
-      username: "ali.ranjbaran76@gmail.com",
-      password: "880266666ali",
-    };
+    const [row] = await connection.execute(
+      "SELECT * FROM users WHERE username = ? AND password = ?",
+      [username, password],
+    );
 
-    if (username !== fakeUser.username || password !== fakeUser.password) {
-      return NextResponse.json(
-        { success: false, message: "ایمیل یا رمز عبور اشتباه است." },
-        { status: 401 },
-      );
+    connection.end();
+
+    if (Array.isArray(row) && row.length > 0) {
+      return NextResponse.json({
+        user: row[0],
+        success: true,
+        message: "ورود موفق بود.",
+      });
     }
 
-    // --- اگر موفق بود:
-    // (در حالت واقعی، اینجا JWT یا Session Cookie تنظیم میشه)
     return NextResponse.json(
-      {
-        success: true,
-        message: "ورود با موفقیت انجام شد.",
-        user: { username },
-      },
-      { status: 200 },
+      { error: "Invalid username or password" },
+      { status: 401 },
     );
-  } catch (err) {
-    console.error("Login API error:", err);
-    return NextResponse.json(
-      { success: false, message: "خطای داخلی سرور" },
-      { status: 500 },
-    );
+  } catch (error) {
+    console.error("Login error:", error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

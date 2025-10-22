@@ -1,43 +1,40 @@
 .search {
-    inline-size: 80%;
-    display: flex;
-    position: relative;
+  inline-size: 80%;
+  display: flex;
+  position: relative;
 
-    .icon {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
+  .icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 
-        width: 40px;
-        height: 40px;
-        color: var(--cc-slate-gray);
+    width: 40px;
+    height: 40px;
+    color: var(--cc-slate-gray);
+  }
 
+  > input {
+    background-color: var(--cc-pure-white);
+    padding: 20px 50px;
+    inline-size: 100%;
+    outline: none;
+    border-radius: 12px;
+    border: 2px solid var(--cc-slate-gray);
+    color: var(--cc-dark-slate);
+    font-size: 20px;
+    text-indent: 5px;
+
+    &:focus-visible {
+      outline: var(--cc-azure-blue);
+      border: 2px solid var(--cc-azure-blue);
     }
+  }
 
-    >input {
-        background-color: var(--cc-pure-white);
-        padding: 20px 50px;
-        inline-size: 100%;
-        outline: none;
-        border-radius: 12px;
-        border: 2px solid var(--cc-slate-gray);
-        color: var(--cc-dark-slate);
-        font-size: 20px;
-        text-indent: 5px;
-
-        &:focus-visible {
-            outline: var(--cc-azure-blue);
-            border: 2px solid var(--cc-azure-blue);
-
-        }
-
-    }
-
-    .btn {
-        position: absolute;
-        left: 8px;
-        top: 50%;
-        transform: translateY(-50%);
-    }
+  .btn {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }

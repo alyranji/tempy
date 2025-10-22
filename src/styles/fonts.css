@@ -1,8 +1,9 @@
 :root {
-    --f-36-90: clamp(2.25rem, 0.1023rem + 9.8182vw, 5.625rem);
+  --f-36-90: clamp(2.25rem, 0.1023rem + 9.8182vw, 5.625rem);
 
-    --f-22-56: clamp(1.375rem, 0.0227rem + 6.1818vw, 3.5rem);
-    --f-18-20: clamp(1.125rem, 1.0455rem + 0.3636vw, 1.25rem);
+  --f-22-56: clamp(1.375rem, 0.0227rem + 6.1818vw, 3.5rem);
+  --f-18-20: clamp(1.125rem, 1.0455rem + 0.3636vw, 1.25rem);
+  --f-14-16: clamp(0.875rem, 0.7955rem + 0.3636vw, 1rem);
 }
 
 /* @layer base {

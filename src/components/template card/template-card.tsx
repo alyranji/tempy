@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 import { Eye, ShoppingCart } from "iconsax-reactjs";
 import Image from "next/image";
@@ -17,8 +17,22 @@ type TemplateCardProps = {
 };
 
 function TemplateCard({ template }: TemplateCardProps): ReactNode {
-  const { addItem } = useCart();
-  console.log("TemplateCard:", template);
+  const { addItem, items } = useCart();
+  const [isInCart, setisInCart] = useState(false);
+
+  useEffect(() => {
+    if (items?.filter((item) => item.id === template.id).length) {
+      setisInCart(true);
+    } else {
+      setisInCart(false);
+    }
+  }, [items, template.id]);
+
+  const handleAddToCart = (): void => {
+    addItem(template);
+    setisInCart(true);
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.imageWrapper}>
@@ -30,18 +44,22 @@ function TemplateCard({ template }: TemplateCardProps): ReactNode {
           className={styles.image}
         />
 
-        {template.sellCount > 20 && <span className={styles.badge}>ویژه</span>}
+        {template.sellCount >= 100 && (
+          <span className={styles.badge}>پرفروش</span>
+        )}
 
         <div className={styles.overlay}>
           <Button variant="light" size="card">
             پیش‌نمایش
           </Button>
+
           <Button
             variant="primary"
             size="card"
-            onClick={() => addItem(template)}
+            disabled={isInCart}
+            onClick={() => handleAddToCart()}
           >
-            افزودن به سبد خرید
+            {isInCart ? "محصول اضافه شد" : "افزودن به سبد خرید"}
           </Button>
         </div>
       </div>
@@ -55,23 +73,22 @@ function TemplateCard({ template }: TemplateCardProps): ReactNode {
         </div>
 
         <div className={styles.tags}>
-          {/* {template.tags.slice(0, 3).map((tag, index) => (
+          {template.tags.slice(0, 3).map((tag, index) => (
             <span key={index} className={styles.tag}>
-              {tag.label}
+              {tag}
             </span>
-          ))} */}
+          ))}
         </div>
 
         <div className={styles.footer}>
           <Link href={`/template/${template.slug}`}>
             <Button variant="outline" size="card">
-              {" "}
               مشاهده جزئیات
             </Button>
           </Link>
           <div className={styles.priceBox}>
             <span className={styles.price}>
-              {template.price.toLocaleString("fa-IR")}
+              {Math.round(template.price).toLocaleString("fa-IR")}
             </span>
             <span className={styles.currency}>تومان</span>
           </div>

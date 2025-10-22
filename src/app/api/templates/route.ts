@@ -9,8 +9,7 @@ export async function GET(req: Request): Promise<NextResponse> {
     const { searchParams } = new URL(req.url);
 
     const status = "active";
-
-    const isRtl = searchParams.get("isrtl");
+    const rtl = searchParams.get("rtl");
     const priceMin = searchParams.get("price_min");
     const priceMax = searchParams.get("price_max");
     const sort = searchParams.get("sort");
@@ -18,95 +17,80 @@ export async function GET(req: Request): Promise<NextResponse> {
     const page = searchParams.get("page");
     const search = searchParams.get("search");
     const minScore = searchParams.get("min_score");
+    const reviewCount = searchParams.get("review_count");
+    const sellCount = searchParams.get("sell_count");
 
-    const category = searchParams.getAll("category");
+    const categories = searchParams.getAll("categories");
     const tag = searchParams.getAll("tag");
     const addons = searchParams.getAll("addons");
     const features = searchParams.getAll("features");
-    const requirements = searchParams.getAll("requirements");
 
     const connection = await mysql.createConnection(GetDBParams());
 
-    let query = `
-      SELECT DISTINCT t.*,
-      GROUP_CONCAT(DISTINCT c.value) AS categories,
-      GROUP_CONCAT(DISTINCT tg.value) AS tags,
-      GROUP_CONCAT(DISTINCT f.value) AS features,
-      GROUP_CONCAT(DISTINCT a.value) AS addons,
-      GROUP_CONCAT(DISTINCT r.value) AS requirements
-      FROM templates t
-      LEFT JOIN templates_has_categories thc ON t.id = thc.template_id
-      LEFT JOIN categories c ON thc.category_id = c.id
-      LEFT JOIN templates_has_tags tht ON t.id = tht.template_id
-      LEFT JOIN tags tg ON tht.tag_id = tg.id
-      LEFT JOIN templates_has_addons tha ON t.id = tha.template_id
-      LEFT JOIN addons a ON tha.addon_id = a.id
-      LEFT JOIN templates_has_features thf ON t.id = thf.template_id
-      LEFT JOIN features f ON thf.feature_id = f.id
-      LEFT JOIN templates_has_requirements thr ON t.id = thr.template_id
-      LEFT JOIN requirements r ON thr.requirement_id = r.id
-      WHERE t.status = ?
-    `;
-
+    let query = `SELECT * FROM templates WHERE status = ?`;
     const values: (string | number)[] = [status];
 
-    if (isRtl) {
-      query += " AND t.isRtl = ?";
-      values.push(isRtl === "true" ? 1 : 0);
+    if (rtl) {
+      query += " AND rtl = ?";
+      values.push(rtl === "true" ? 1 : 0);
     }
+    console.log(Array.from(searchParams.entries()));
 
     if (priceMin) {
-      query += " AND t.price >= ?";
+      query += " AND price >= ?";
       values.push(Number(priceMin));
     }
 
     if (priceMax) {
-      query += " AND t.price <= ?";
+      query += " AND price <= ?";
       values.push(Number(priceMax));
     }
 
     if (minScore) {
-      query += " AND t.score >= ?";
+      query += " AND score >= ?";
       values.push(Number(minScore));
     }
 
+    if (reviewCount) {
+      query += " AND reviewCount >= ?";
+      values.push(Number(reviewCount));
+    }
+    if (sellCount) {
+      query += " AND sellCount >= ?";
+      values.push(Number(sellCount));
+    }
+
     if (search) {
-      query += " AND (t.title LIKE ? OR t.description LIKE ?)";
+      query += " AND (title LIKE ? OR description LIKE ?)";
       values.push(`%${search}%`, `%${search}%`);
     }
 
-    if (category.length > 0) {
-      query += ` AND c.value IN (${category.map(() => "?").join(",")})`;
-      values.push(...category);
-    }
+    categories.forEach((c) => {
+      query += ` AND JSON_CONTAINS(categories, ?)`;
+      values.push(JSON.stringify(c));
+    });
 
-    if (tag.length > 0) {
-      query += ` AND tg.value IN (${tag.map(() => "?").join(",")})`;
-      values.push(...tag);
-    }
+    tag.forEach((t) => {
+      query += ` AND JSON_CONTAINS(tags, ?)`;
+      values.push(JSON.stringify(t));
+    });
 
-    if (addons.length > 0) {
-      query += ` AND a.value IN (${addons.map(() => "?").join(",")})`;
-      values.push(...addons);
-    }
+    addons.forEach((a) => {
+      query += ` AND JSON_CONTAINS(addons, ?)`;
+      values.push(JSON.stringify(a));
+    });
 
-    if (features.length > 0) {
-      query += ` AND f.value IN (${features.map(() => "?").join(",")})`;
-      values.push(...features);
-    }
+    features.forEach((f) => {
+      query += ` AND JSON_CONTAINS(features, ?)`;
+      values.push(JSON.stringify(f));
+    });
 
-    if (requirements.length > 0) {
-      query += ` AND r.value IN (${requirements.map(() => "?").join(",")})`;
-      values.push(...requirements);
-    }
-
-    query += " GROUP BY t.id";
-
+    // مرتب سازی
     if (sort) {
-      if (sort === "price_asc") query += " ORDER BY t.price ASC";
-      else if (sort === "price_desc") query += " ORDER BY t.price DESC";
-      else if (sort === "newest") query += " ORDER BY t.createdAt DESC";
-      else if (sort === "popular") query += " ORDER BY t.sellCount DESC";
+      if (sort === "price_asc") query += " ORDER BY price ASC";
+      else if (sort === "price_desc") query += " ORDER BY price DESC";
+      else if (sort === "newest") query += " ORDER BY created_at DESC";
+      else if (sort === "popular") query += " ORDER BY sellCount DESC";
     }
 
     if (limit) {
@@ -114,29 +98,28 @@ export async function GET(req: Request): Promise<NextResponse> {
       const offset = (pageNum - 1) * Number(limit);
       query += ` LIMIT ${offset}, ${limit}`;
     }
-
+    console.log("query: ", query);
+    console.log("values: ", values);
     const [rows] = await connection.execute(query, values);
 
     const templates: Template[] = (rows as any[]).map((template) => ({
       ...template,
+      price: template.price ?? 0,
+      score: template.score ?? null,
+      sellCount: template.sellCount ?? 0,
+      reviewCount: template.reviewCount ?? 0,
       categories: template.categories
-        ? template.categories.split(",").map((c: string) => c.trim())
+        ? JSON.parse(JSON.stringify(template.categories))
         : [],
-      tags: template.tags
-        ? template.tags.split(",").map((t: string) => t.trim())
-        : [],
+      tags: template.tags ? JSON.parse(JSON.stringify(template.tags)) : [],
       features: template.features
-        ? template.features.split(",").map((f: string) => f.trim())
+        ? JSON.parse(JSON.stringify(template.features))
         : [],
       addons: template.addons
-        ? template.addons.split(",").map((a: string) => a.trim())
-        : [],
-      requirements: template.requirements
-        ? template.requirements.split(",").map((r: string) => r.trim())
+        ? JSON.parse(JSON.stringify(template.addons))
         : [],
     }));
 
-    console.log("templates:", templates);
     await connection.end();
 
     return NextResponse.json({
