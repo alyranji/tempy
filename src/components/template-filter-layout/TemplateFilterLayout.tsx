@@ -5,6 +5,7 @@ import React, { ReactNode } from "react";
 
 import clsx from "clsx";
 
+import { categoryDict } from "@/dict/categoryDict";
 import {
   Category,
   Crown,
@@ -24,10 +25,12 @@ import styles from "./TemplateFilterLayout.module.css";
 
 interface TemplateFilterLayoutProps {
   initialCategory?: string;
+  inCategoryPage?: boolean;
 }
 
 function TemplateFilterLayout({
   initialCategory,
+  inCategoryPage,
 }: TemplateFilterLayoutProps): ReactNode {
   const [templates, setTemplates] = useState<Template[]>();
   const [rtl, setRtl] = useState<boolean | undefined>();
@@ -65,19 +68,6 @@ function TemplateFilterLayout({
     setMinPrice(parseInt(e.target.min));
   };
 
-  const categoryData = [
-    { value: undefined, label: "همه" },
-    { value: "portfolio", label: "نمونه کار" },
-    { value: "store", label: "فروشگاهی" },
-    { value: "corp", label: "شرکتی" },
-    { value: "personal", label: "شخصی" },
-    { value: "blog", label: "وبلاگ" },
-    { value: "news", label: "خبری" },
-    { value: "marketing", label: "دیجیتال مارکتینگ" },
-    { value: "startup", label: "استارتاپی" },
-    { value: "edu", label: "آموزشی" },
-    { value: "landing", label: "لندینگ پیج" },
-  ];
   return (
     <div className={styles.layout}>
       <div className={styles.sidebar}>
@@ -93,13 +83,14 @@ function TemplateFilterLayout({
             </button>
 
             <div className={styles.sectionContent}>
-              {categoryData.map((item, index) => (
+              {categoryDict.map((item, index) => (
                 <a
                   key={index}
                   href="#"
                   className={clsx(
                     styles.categoryLink,
                     category === item.value && styles.active,
+                    inCategoryPage && styles.inCategoryPage,
                   )}
                   onClick={(e) => {
                     e.preventDefault();

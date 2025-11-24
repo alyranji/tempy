@@ -19,6 +19,7 @@ import { Button } from "@/components/button/button";
 import TemplateCard from "@/components/template card/template-card";
 
 import { useCart } from "@/providers/CartProvider";
+import { useDrawer } from "@/providers/OpenDrawerProvider";
 
 import { type Template } from "@/types/templates";
 
@@ -64,6 +65,7 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
   const [similarTemplates, setSimilarTemplates] = useState<Template[]>();
 
   const { addItem, items, removeItem } = useCart();
+  const { openDrawer } = useDrawer();
 
   if (!slug) {
     notFound();
@@ -154,37 +156,6 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
       content: "سرعت و بهینه‌سازی این قالب واقعا شگفت‌انگیزه. پیشنهاد می‌کنم.",
     },
   ];
-
-  // const similarTemplates = [
-  //   {
-  //     id: 1,
-  //     title: "قالب فروشگاهی پرو",
-  //     image: "/placeholder.svg",
-  //     price: 3200000,
-  //     score: 4,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "قالب چند فروشندگی",
-  //     image: "/placeholder.svg",
-  //     price: 4500000,
-  //     score: 5,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "قالب فروشگاه مینیمال",
-  //     image: "/placeholder.svg",
-  //     price: 1800000,
-  //     score: 4,
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "قالب فروشگاه لوکس",
-  //     image: "/placeholder.svg",
-  //     price: 2900000,
-  //     score: 5,
-  //   },
-  // ];
 
   const renderStars = (score: number): ReactNode => {
     const scoreArray = Array.apply("", Array(score));
@@ -301,7 +272,10 @@ const Page = ({ params }: TemplatePageProps): ReactNode => {
                   <Button
                     variant="primary"
                     size="md"
-                    onClick={() => addItem(template)}
+                    onClick={() => {
+                      addItem(template);
+                      openDrawer();
+                    }}
                     icon={<ShoppingBag />}
                   >
                     افزودن به سبد خرید

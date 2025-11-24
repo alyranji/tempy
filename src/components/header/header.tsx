@@ -16,6 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useCart } from "@/providers/CartProvider";
+import { useDrawer } from "@/providers/OpenDrawerProvider";
 
 import { Button } from "../button/button";
 import Drawer from "../drawer/Drawer";
@@ -25,10 +26,10 @@ import styles from "./header.module.css";
 const Header = (): ReactNode => {
   const { items } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
-
+  const { open, openDrawer } = useDrawer();
   return (
     <>
-      <Drawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+      <Drawer />
       <header className={styles.header}>
         <div className={styles.logowrapper}>
           <Link href="/">
@@ -63,21 +64,13 @@ const Header = (): ReactNode => {
         </div>
         <div className={styles.headericons}>
           <div className={styles.iconwrapper}>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setCartOpen((old) => !old)}
-            >
+            <Button variant="ghost" size="icon" onClick={openDrawer}>
               <ShoppingCart size={20} />
             </Button>
             {items?.length !== undefined && (
               <div className={styles.cartcount}>{items.length}</div>
             )}
           </div>
-
-          <Button variant="ghost" size="icon">
-            <User size={20} />
-          </Button>
         </div>
       </header>
     </>

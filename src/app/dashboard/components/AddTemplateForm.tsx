@@ -89,7 +89,6 @@ export default function AddTemplateForm() {
       });
 
       const result = await res.json();
-      console.log(result);
 
       if (res.ok) {
         alert("تمپلیت با موفقیت اضافه شد!");

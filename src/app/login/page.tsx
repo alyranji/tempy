@@ -42,12 +42,10 @@ export default function LoginPage(): ReactNode {
       const result = await res.json();
 
       if (!res.ok || !result.success) {
-        // alert(result.message || "ورود ناموفق بود.");
         showToast("ورود ناموفق بود.", "error");
         return;
       }
 
-      localStorage.setItem("user", JSON.stringify(result.user));
       showToast("ورود شما انجام شد.", "success");
 
       router.push("/dashboard");

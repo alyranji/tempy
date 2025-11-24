@@ -1,0 +1,17 @@
+.categoryWrapper {
+
+
+    .header {
+        height: 200px;
+        background-color: var(--color-card);
+        border-bottom: 1px solid var(--color-border);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        >h1 {
+            font-size: var(--f-22-56);
+            font-weight: bold;
+        }
+    }
+}

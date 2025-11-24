@@ -79,6 +79,14 @@
             border: 1px solid transparent;
             margin-inline-end: 5px;
 
+            &.inCategoryPage {
+              display: none;
+            }
+
+            &.inCategoryPage.active {
+              display: inline-flex;
+            }
+
             &:hover {
               background-color: #e5e7eb;
             }
@@ -127,7 +135,7 @@
               width: 100%;
               justify-content: space-between;
 
-              > div {
+              >div {
                 display: flex;
                 gap: 10px;
                 align-items: center;
@@ -159,7 +167,7 @@
                 }
               }
 
-              input:checked + .slider {
+              input:checked+.slider {
                 background-color: #34c759;
 
                 &::before {
@@ -187,7 +195,6 @@
       gap: 24px;
       align-items: center;
       height: 5rem;
-      background-color: var(--cc-pure-white);
       border-radius: 16px;
       flex-direction: row;
       font-size: var(--f-14-16);
