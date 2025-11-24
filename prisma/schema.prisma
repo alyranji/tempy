@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model comments {
+  id          Int       @id @default(autoincrement())
+  template_id Int
+  user_id     Int
+  content     String    @db.Text
+  created_at  DateTime? @default(now()) @db.DateTime(0)
+  templates   templates @relation(fields: [template_id], references: [id], onDelete: Cascade, map: "fk_comments_template")
+  users       users     @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "fk_comments_user")
+
+  @@index([template_id], map: "fk_comments_template")
+  @@index([user_id], map: "fk_comments_user")
+}
+
+model templates {
+  id           Int               @id @default(autoincrement())
+  title        String            @db.VarChar(255)
+  image        String?           @db.VarChar(255)
+  description  String            @db.Text
+  demo_url     String            @db.VarChar(255)
+  slug         String            @unique(map: "slug_UNIQUE") @db.VarChar(255)
+  price        Decimal?          @db.Decimal(10, 2)
+  rtl          Boolean           @default(false)
+  score        Int?
+  sellCount    Int?
+  reviewCount  Int?
+  status       templates_status? @default(active)
+  created_at   DateTime?         @default(now()) @db.Timestamp(0)
+  updated_at   DateTime?         @default(now()) @db.Timestamp(0)
+  categories   Json?
+  tags         Json?
+  features     Json?
+  addons       Json?
+  requirements Json?
+  comments     comments[]
+}
+
+model users {
+  id         Int           @id @default(autoincrement())
+  password   String        @db.VarChar(255)
+  username   String        @db.VarChar(45)
+  email      String        @unique(map: "email_UNIQUE") @db.VarChar(150)
+  phone      String?       @db.VarChar(45)
+  firstname  String?       @db.VarChar(45)
+  lastname   String?       @db.VarChar(45)
+  avatar_url String?       @db.VarChar(45)
+  status     users_status? @default(active)
+  created_at DateTime?     @default(now()) @db.DateTime(0)
+  updated_at DateTime?     @db.DateTime(0)
+  role       String?       @db.VarChar(45)
+  comments   comments[]
+}
+
+enum users_status {
+  active
+  inactive
+  banned
+}
+
+enum templates_status {
+  active
+  draft
+}
