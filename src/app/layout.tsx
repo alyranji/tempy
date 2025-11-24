@@ -9,6 +9,7 @@ import Header from "@/components/header/header";
 import { ToastProvider } from "@/components/toast/showToast";
 
 import CartProvider from "@/providers/CartProvider";
+import DrawerProvider from "@/providers/OpenDrawerProvider";
 
 import "@/styles/fonts.css";
 import "@/styles/globals.css";
@@ -29,16 +30,18 @@ export default function RootLayout({
 }>): ReactNode {
   return (
     <StrictMode>
-      <CartProvider>
-        <html lang="fa" dir="rtl">
-          <body className={`${yekanBakhPro.className}`}>
-            <Header />
-            <main>{children}</main>
-            <ToastProvider />
-            <Footer />
-          </body>
-        </html>
-      </CartProvider>
+      <DrawerProvider>
+        <CartProvider>
+          <html lang="fa" dir="rtl">
+            <body className={`${yekanBakhPro.className}`}>
+              <Header />
+              <main>{children}</main>
+              <ToastProvider />
+              <Footer />
+            </body>
+          </html>
+        </CartProvider>
+      </DrawerProvider>
     </StrictMode>
   );
 }

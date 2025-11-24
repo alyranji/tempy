@@ -1,0 +1,18 @@
+export const categoryDict = [
+  { value: "all", label: "همه" },
+  { value: "portfolio", label: "نمونه کار" },
+  { value: "ecommerce", label: "فروشگاهی" },
+  { value: "corporate", label: "شرکتی" },
+  { value: "personal", label: "شخصی" },
+  { value: "blog", label: "وبلاگ" },
+  { value: "news", label: "خبری" },
+  { value: "marketing", label: "دیجیتال مارکتینگ" },
+  { value: "startup", label: "استارتاپی" },
+  { value: "edu", label: "آموزشی" },
+  { value: "landing", label: "لندینگ پیج" },
+  { value: "beauty", label: "زیبایی" },
+  { value: "medical", label: "درمانی" },
+  { value: "real-state", label: "املاک" },
+  { value: "service", label: "خدماتی" },
+  { value: "cafe", label: "کافه و رستوران" },
+];

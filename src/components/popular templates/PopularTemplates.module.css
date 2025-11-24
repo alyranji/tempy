@@ -1,0 +1,105 @@
+.sectionPadding {
+    padding-top: var(--spacing-16);
+    padding-bottom: var(--spacing-16);
+    border-bottom: 1px solid var(--color-border);
+
+    @media (min-width: 768px) {
+        /* md */
+        padding-top: var(--spacing-20);
+        padding-bottom: var(--spacing-20);
+    }
+}
+
+.container {
+    max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
+}
+
+.headerWithCta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    /* mb-12 */
+}
+
+.titleGroup {
+    &>* {
+        margin-top: 0.5rem;
+        /* space-y-2 */
+        margin-bottom: 0;
+    }
+
+    &>*:first-child {
+        margin-top: 0;
+    }
+}
+
+.sectionTitle {
+    font-size: 1.875rem;
+    /* text-3xl */
+    line-height: 2.25rem;
+    font-weight: 700;
+
+    @media (min-width: 768px) {
+        /* md */
+        font-size: 2.25rem;
+        /* text-4xl */
+        line-height: 2.5rem;
+    }
+}
+
+.sectionSubtitle {
+    font-size: 1.125rem;
+    /* text-lg */
+    line-height: 1.75rem;
+    color: var(--color-muted-foreground);
+    max-width: 42rem;
+    /* max-w-2xl */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sectionSubtitleSm {
+    font-size: 1.125rem;
+    /* text-lg */
+    line-height: 1.75rem;
+    color: var(--color-muted-foreground);
+}
+
+.button {
+    /* Base style (size="default") */
+    padding: 0.625rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 150ms, border-color 150ms;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.outlineButton {
+    background-color: transparent;
+    color: var(--color-foreground);
+    border-color: var(--color-border);
+
+    &:hover {
+        background-color: var(--color-secondary);
+    }
+}
+
+.ctaButton {
+    /* variant="outline" className="gap-2 bg-transparent" */
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    gap: 0.5rem;
+    /* gap-2 */
+}

@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@prisma/client": "^6.18.0",
     "clsx": "^2.1.1",
     "iconsax-reactjs": "^0.0.8",
+    "jose": "^6.1.0",
     "mysql2": "^3.15.2",
     "next": "15.5.4",
     "postcss": "^8.5.6",
@@ -30,8 +32,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "ai-digest": "^1.5.1",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
+    "prisma": "^6.18.0",
     "tailwindcss": "^4.1.14",
     "typescript": "^5"
   }

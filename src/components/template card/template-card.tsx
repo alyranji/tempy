@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useCart } from "@/providers/CartProvider";
+import { useDrawer } from "@/providers/OpenDrawerProvider";
 
 import { Template } from "@/types/templates";
 
@@ -19,7 +20,7 @@ type TemplateCardProps = {
 function TemplateCard({ template }: TemplateCardProps): ReactNode {
   const { addItem, items } = useCart();
   const [isInCart, setisInCart] = useState(false);
-
+  const { openDrawer } = useDrawer();
   useEffect(() => {
     if (items?.filter((item) => item.id === template.id).length) {
       setisInCart(true);
@@ -31,6 +32,7 @@ function TemplateCard({ template }: TemplateCardProps): ReactNode {
   const handleAddToCart = (): void => {
     addItem(template);
     setisInCart(true);
+    openDrawer();
   };
 
   return (

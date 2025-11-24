@@ -7,11 +7,12 @@ import styles from "./Contact.module.css";
 
 // ContactForm.jsx
 
+// ContactForm.jsx
+
 export default function ContactForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // منطق ارسال فرم (مثل ارسال به API)
-    console.log("Form submitted from Client Component!");
   };
 
   return (

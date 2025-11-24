@@ -2,6 +2,7 @@
 
 import { type ReactNode, useState } from "react";
 
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -141,8 +142,12 @@ export default function Cart(): ReactNode {
                       <div className={styles.itemContent}>
                         {/* Product Image */}
                         <div className={styles.itemImage}>
-                          {/* <Image src={item.image || "/placeholder.svg"} alt={item.title} fill className={styles.imageObjectCover} /> */}
-                          <div className={styles.imagePlaceholder}>تصویر</div>
+                          <Image
+                            src={item.image || "/placeholder.svg"}
+                            alt={item.title}
+                            fill
+                            className={styles.imageObjectCover}
+                          />
                         </div>
 
                         {/* Product Info */}

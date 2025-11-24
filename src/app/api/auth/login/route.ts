@@ -1,5 +1,4 @@
-import { success } from "zod";
-
+import * as jose from "jose";
 import { GetDBParams } from "@/shared/common";
 import mysql from "mysql2/promise";
 import { NextResponse } from "next/server";
@@ -38,7 +37,6 @@ export async function POST(req: Request): Promise<
 
     if (Array.isArray(row) && row.length > 0) {
       return NextResponse.json({
-        user: row[0],
         success: true,
         message: "ورود موفق بود.",
       });

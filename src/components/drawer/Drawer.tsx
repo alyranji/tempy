@@ -9,32 +9,28 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useCart } from "@/providers/CartProvider";
+import { useDrawer } from "@/providers/OpenDrawerProvider";
 
 import { Button } from "../button/button";
 
 import styles from "./Drawer.module.css";
 
-type DrawerProps = PropsWithChildren & {
-  isOpen: boolean;
-  onClose: () => void;
-};
+type DrawerProps = PropsWithChildren;
 
-export default function Drawer({ isOpen, onClose }: DrawerProps): ReactNode {
+export default function Drawer(): ReactNode {
   const { items, removeItem, totalItems, totalPrice, updateQuantity } =
     useCart();
-
+  const { open, closeDrawer } = useDrawer();
   return (
     <>
       {/* Backdrop */}
       <div
-        className={`${styles.backdrop} ${isOpen ? styles["backdrop-open"] : ""}`}
-        onClick={onClose}
+        className={`${styles.backdrop} ${open ? styles["backdrop-open"] : ""}`}
+        onClick={closeDrawer}
       />
 
       {/* Drawer */}
-      <div
-        className={`${styles.drawer} ${isOpen ? styles["drawer-open"] : ""}`}
-      >
+      <div className={`${styles.drawer} ${open ? styles["drawer-open"] : ""}`}>
         <div className={styles.container}>
           {/* Header */}
           <div className={styles.header}>
@@ -58,7 +54,7 @@ export default function Drawer({ isOpen, onClose }: DrawerProps): ReactNode {
             </div>
 
             <Button
-              onClick={onClose}
+              onClick={closeDrawer}
               className={styles["close-button"]}
               aria-label="بستن سبد خرید"
               icon={<CloseSquare size="32" color="#6c757d" />}
@@ -81,7 +77,7 @@ export default function Drawer({ isOpen, onClose }: DrawerProps): ReactNode {
                   </p>
                 </div>
                 <button
-                  onClick={onClose}
+                  onClick={closeDrawer}
                   className={styles["empty-action-button"]}
                 >
                   مشاهده محصولات
@@ -231,7 +227,7 @@ export default function Drawer({ isOpen, onClose }: DrawerProps): ReactNode {
                 {/* از کامپوننت Link استفاده نشده، اما کلاس استایل دهی اعمال شده است */}
                 <a
                   href="/cart/checkout"
-                  onClick={onClose}
+                  onClick={closeDrawer}
                   className={styles["checkout-button"]}
                 >
                   {/* <ArrowLeft className={styles['icon-sm']} /> */}
@@ -254,7 +250,7 @@ export default function Drawer({ isOpen, onClose }: DrawerProps): ReactNode {
                 </a>
                 <a
                   href="/cart"
-                  onClick={onClose}
+                  onClick={closeDrawer}
                   className={styles["view-cart-button"]}
                 >
                   مشاهده سبد خرید

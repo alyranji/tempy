@@ -1,6 +1,25 @@
 @import "tailwindcss";
 
 :root {
+  --color-background: #f8fafc;
+  --color-secondary: #f1f5f9;
+  --color-card: #ffffff;
+  --color-border: #e2e8f0;
+  --color-primary: #007bff;
+  --color-primary-hover: #0056b3;
+  --color-primary-light: #e0f0ff;
+  --color-primary-foreground: #ffffff;
+  --color-muted-foreground: #64748b;
+  --color-foreground: #0f172a;
+
+  --spacing-4: 1rem;
+  --spacing-8: 2rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+
+  --container-max-width: 1400px;
   --cc-sky-blue: #4aaaff;
   --cc-azure-blue: #0077e0;
   --cc-royal-blue: #197bff;
@@ -30,12 +49,10 @@
   --cc-white-soft: hsla(0, 0%, 100%, 0.8);
   --cc-dark-overlay: rgba(39, 39, 39, 0.8);
 
-  --gradient-cosmic-night: radial-gradient(
-    circle farthest-corner at 10% 20%,
-    #0b0b0b 0%,
-    #091b49 50.6%,
-    #0b0b0b 100.2%
-  );
+  --gradient-cosmic-night: radial-gradient(circle farthest-corner at 10% 20%,
+      #0b0b0b 0%,
+      #091b49 50.6%,
+      #0b0b0b 100.2%);
 
   --gradient-brand-blue: linear-gradient(141deg, #4aaaff, #0077e0);
   --gradient-brand-blue-reverse: linear-gradient(141deg, #0077e0, #4aaaff);

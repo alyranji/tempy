@@ -3,6 +3,8 @@
 import type React from "react";
 import { ReactNode, useState } from "react";
 
+import { Lock } from "iconsax-reactjs";
+import Image from "next/image";
 import Link from "next/link";
 
 import { useCart } from "@/providers/CartProvider";
@@ -71,7 +73,6 @@ export default function CheckoutPage(): ReactNode {
 
     await new Promise((resolve) => setTimeout(resolve, 2000)); // Clear cart and redirect to success page
 
-    console.log("Purchase Complete. Redirecting...");
     setIsProcessing(false); // برای جلوگیری از ریدایرکت واقعی
   };
 
@@ -486,7 +487,13 @@ export default function CheckoutPage(): ReactNode {
                     {items.map((item) => (
                       <div key={item.id} className={styles.summaryItem}>
                         <div className={styles.itemImageWrapper}>
-                          {/* <Image ... /> */}
+                          {item.image && (
+                            <Image
+                              src={item.image || "#"}
+                              fill
+                              alt={item.title}
+                            />
+                          )}
 
                           <div className={styles.imagePlaceholder}></div>
                         </div>
@@ -588,22 +595,7 @@ export default function CheckoutPage(): ReactNode {
 
                   <div className={styles.securePaymentInfo}>
                     {/* <CheckCircle2 className={styles.iconXs} /> */}
-
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className={styles.greenIcon}
-                    >
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                      <path d="m9 11 3 3L22 4" />
-                    </svg>
+                    <Lock />
                     <span>پرداخت امن و محافظت شده</span>
                   </div>
                 </div>
