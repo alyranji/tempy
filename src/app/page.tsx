@@ -6,11 +6,6 @@ import TemplateFilterLayout from "@/components/template-filter-layout/TemplateFi
 
 import styles from "./HomePage.module.css";
 
-// ************************************
-// شبیه سازی داده ها و کامپوننت ها (MOCK DATA & COMPONENTS)
-// ************************************
-
-// شبیه سازی آیکون ها (SVG Icons)
 const Icon = ({ name, className }) => {
   // این یک شبیه سازی ساده برای نمایش است
   const icons = {
@@ -234,37 +229,6 @@ const categories = [
   { id: 8, name: "خدماتی", slug: "service" },
 ];
 
-// شبیه سازی کامپوننت Header
-// const Header = () => (
-//   <header className={styles.header}>
-//     <div className={styles.container}>
-//       <div className={styles.headerContent}>
-//         <div className={styles.logo}>Logo</div>
-//         <nav className={styles.nav}>
-//           <a href="/" className={styles.navLink}>
-//             قالب‌ها
-//           </a>
-//           <a href="/pricing" className={styles.navLink}>
-//             قیمت‌گذاری
-//           </a>
-//           <a href="/contact" className={styles.navLink}>
-//             تماس
-//           </a>
-//         </nav>
-//         <div className={styles.authButtons}>
-//           <button className={`${styles.button} ${styles.outlineButton}`}>
-//             ورود
-//           </button>
-//           <button className={`${styles.button} ${styles.primaryButton}`}>
-//             ثبت نام
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   </header>
-// );
-
-// شبیه سازی TemplateCard
 const TemplateCard = ({ template }) => (
   <a href={`/template/${template.id}`} className={styles.templateCard}>
     <div className={styles.templateCardImage}>
@@ -374,6 +338,9 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        <div className={styles.imgWrapper}>
+          <img src="" alt="" />
+        </div>
       </section>
       {/* Categories Section */}
       <section className={styles.categoriesSection}>
@@ -421,7 +388,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* Featured Templates */}
-      {featuredTemplates.length > 0 && (
+      {/* {featuredTemplates.length > 0 && (
         <section className={styles.sectionPadding}>
           <div className={styles.container}>
             <div className={styles.sectionHeader}>
@@ -434,9 +401,9 @@ export default function HomePage() {
             <TemplateGrid templates={featuredTemplates} />
           </div>
         </section>
-      )}
+      )} */}
       {/* How It Works Section */}
-      <section className={`${styles.sectionPadding} ${styles.secondaryBg}`}>
+      {/* <section className={`${styles.sectionPadding} ${styles.secondaryBg}`}>
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>چگونه کار می‌کند؟</h2>
@@ -482,7 +449,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* New Arrivals */}
       <section className={styles.sectionPadding}>
         <div className={styles.container}>

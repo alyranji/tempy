@@ -75,7 +75,7 @@ function TemplateCard({ template }: TemplateCardProps): ReactNode {
         </div>
 
         <div className={styles.tags}>
-          {template.tags.slice(0, 3).map((tag, index) => (
+          {template.tags?.slice(0, 3).map((tag, index) => (
             <span key={index} className={styles.tag}>
               {tag}
             </span>

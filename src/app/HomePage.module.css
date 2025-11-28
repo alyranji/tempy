@@ -271,7 +271,7 @@
 .heroSection {
     /* border-b border-border bg-gradient-to-b from-background via-secondary/20 to-background */
     border-bottom: 1px solid var(--color-border);
-    background: linear-gradient(to bottom, var(--color-background), color-mix(in srgb, var(--color-secondary) 20%, transparent), var(--color-background));
+    background: var(--gradient-cosmic-night);
     padding-top: 5rem;
     /* py-20 */
     padding-bottom: 5rem;
@@ -308,6 +308,7 @@
     line-height: 1.25;
     /* leading-tight */
     font-weight: 700;
+    color: var(--color-background);
 
     @media (min-width: 768px) {
         font-size: 3.75rem;
@@ -368,21 +369,15 @@
 }
 
 .searchInput {
-    /* h-16 md:h-20 text-lg md:text-xl pr-16 pl-32 rounded-2xl border-2 focus:border-primary shadow-lg */
     height: 4rem;
-    /* h-16 */
+    color: var(--color-background);
     width: 100%;
     font-size: 1.125rem;
-    /* text-lg */
     padding-right: 4rem;
-    /* pr-16 */
     padding-left: 8rem;
-    /* pl-32 */
     border-radius: 1rem;
-    /* rounded-2xl */
     border: 2px solid var(--color-border);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    /* shadow-lg */
     outline: none;
     transition: border-color 150ms;
 
